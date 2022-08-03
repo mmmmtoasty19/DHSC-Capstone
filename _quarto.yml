@@ -16,7 +16,7 @@ csl: apa.csl
 
 format:
   html:
-    theme: cosmo
+    theme: journal
   pdf:
     documentclass: scrreprt
 
