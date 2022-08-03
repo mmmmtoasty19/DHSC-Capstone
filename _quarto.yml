@@ -7,8 +7,7 @@ book:
   date: "8/2/2022"
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
+    - chapter2.qmd
     - references.qmd
 
 bibliography: references.bib
