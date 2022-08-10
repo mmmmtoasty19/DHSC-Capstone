@@ -16,8 +16,8 @@ csl: apa.csl
 format:
   html:
     theme: journal
-  pdf:
-    documentclass: scrreprt
+  #pdf:
+    #documentclass: scrreprt
 
 editor: visual
 
