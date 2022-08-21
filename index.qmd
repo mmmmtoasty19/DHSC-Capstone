@@ -37,7 +37,7 @@ and fully manual reflective testing using machine learning algorithms.
 
 ### Draft Question
 
-What are the beliefs, attitudes, opinions, and knowledge about machine
-learning in the clinical laboratory.
+What are the beliefs, attitudes, opinions, and knowledge about using
+machine learning in the clinical laboratory.
 
 ## Significance

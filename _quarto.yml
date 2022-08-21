@@ -18,8 +18,9 @@ csl: apa.csl
 format:
   html:
     theme: journal
-  #pdf:
-    #documentclass: scrreprt
+  docx:
+    reference-doc: extras/custom-reference.docx
+
 
 editor: visual
 
