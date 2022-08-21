@@ -1,1 +1,43 @@
 # Introduction
+
+The primary business purpose of the clinical laboratory is to provide
+results of testing requested by physicians and other healthcare
+professionals. This testing in a broad sense is used to help solve
+diagnostic problems [@verboeket-vandevenne2012]. To continue to add
+value to the business purpose of the laboratory, laboratory
+professionals can add value beyond just running the provided tests.
+Laboratory professionals can add value through both reflective and
+reflex testing. Automated analyzers add most tests based on rules
+(algorithms) established by laboratory professionals; this is defined as
+'reflex testing.' Clinical biochemists add the remainder of tests after
+considering a more comprehensive range of information than can readily
+be incorporated into reflex testing algorithms; this is defined as
+'reflective testing' [@srivastava2010]. Both reflex and reflective
+testing became possible with the advent of laboratory information
+systems (LIS) that were sufficiently flexible to permit modification of
+existing test requests at various stages of the analytical process
+[@srivastava2010]. This research study will focus specifically on reflex
+testing, those tests added automatically by a set of rules established
+in each laboratory. In most current clinical laboratories, reflex
+testing is performed with a 'hard' cutoff, using a specifically
+established range with no means of flexibility [@murphy2021].
+
+<!--# Rewrite this section -->
+
+This study will examine the use of Machine learning to develop
+algorithms to allow flexibility for automatic reflex testing in clinical
+chemistry. The goal is to fill the gap between hard coded reflex testing
+and fully manual reflective testing using machine learning algorithms.
+
+<!--#  -->
+
+## Statement of Problem
+
+## Purpose and Research Question
+
+### Draft Question
+
+What are the beliefs, attitudes, opinions, and knowledge about machine
+learning in the clinical laboratory.
+
+## Significance
