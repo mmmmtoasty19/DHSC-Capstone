@@ -1,33 +1,10 @@
 # Introduction
 
-The primary business purpose of the clinical laboratory is to provide
-results of testing requested by physicians and other healthcare
-professionals. This testing in a broad sense is used to help solve
-diagnostic problems [@verboeket-vandevenne2012]. To continue to add
-value to the business purpose of the laboratory, laboratory
-professionals can add value beyond just running the provided tests.
-Laboratory professionals can add value through both reflective and
-reflex testing. Automated analyzers add most tests based on rules
-(algorithms) established by laboratory professionals; this is defined as
-'reflex testing.' Clinical biochemists add the remainder of tests after
-considering a more comprehensive range of information than can readily
-be incorporated into reflex testing algorithms; this is defined as
-'reflective testing' [@srivastava2010]. Both reflex and reflective
-testing became possible with the advent of laboratory information
-systems (LIS) that were sufficiently flexible to permit modification of
-existing test requests at various stages of the analytical process
-[@srivastava2010]. This research study will focus specifically on reflex
-testing, those tests added automatically by a set of rules established
-in each laboratory. In most current clinical laboratories, reflex
-testing is performed with a 'hard' cutoff, using a specifically
-established range with no means of flexibility [@murphy2021].
+The primary business purpose of the clinical laboratory is to provide results of testing requested by physicians and other healthcare professionals. This testing in a broad sense is used to help solve diagnostic problems [@verboeket-vandevenne2012]. To continue to add value to the business purpose of the laboratory, laboratory professionals can add value beyond just running the provided tests. Laboratory professionals can add value through both reflective and reflex testing. Automated analyzers add most tests based on rules (algorithms) established by laboratory professionals; this is defined as 'reflex testing.' Clinical biochemists add the remainder of tests after considering a more comprehensive range of information than can readily be incorporated into reflex testing algorithms; this is defined as 'reflective testing' [@srivastava2010]. Both reflex and reflective testing became possible with the advent of laboratory information systems (LIS) that were sufficiently flexible to permit modification of existing test requests at various stages of the analytical process [@srivastava2010]. This research study will focus specifically on reflex testing, those tests added automatically by a set of rules established in each laboratory. In most current clinical laboratories, reflex testing is performed with a 'hard' cutoff, using a specifically established range with no means of flexibility [@murphy2021].
 
 <!--# Rewrite this section -->
 
-This study will examine the use of Machine learning to develop
-algorithms to allow flexibility for automatic reflex testing in clinical
-chemistry. The goal is to fill the gap between hard coded reflex testing
-and fully manual reflective testing using machine learning algorithms.
+This study will examine the use of Machine learning to develop algorithms to allow flexibility for automatic reflex testing in clinical chemistry. The goal is to fill the gap between hard coded reflex testing and fully manual reflective testing using machine learning algorithms.
 
 <!--#  -->
 
@@ -35,53 +12,20 @@ and fully manual reflective testing using machine learning algorithms.
 
 ## Purpose and Research Question
 
-What are the beliefs, attitudes, opinions, and knowledge about using
-machine learning in the clinical laboratory.
+Develop and test a machine learning algorithm to further reduce unnecessary reflex testing.
 
 ## Significance
 
-Health spending in the U.S. increased by 4.6% in 2019 to \$3.8 trillion
-or \$11,582 per capita. This growth rate is in line with 2018 (4.7
-percent) and slightly faster than what was observed in 2017 (4.3
-percent) [@americanmedicalassociation2021]. Although laboratory costs
-comprise only about 5% of the healthcare budget in the United States, it
-is estimated that laboratory services drive up to 70% of all downstream
-medical decisions, which encompass a substantial portion of the budget
-[@ma2019]. As healthcare budgets increase, payers, including Medicare,
-commercial insurers, and employers, will demand accountability and
-eliminate the abuse and misuse of ineffective testing strategies
-[@hernandez2003]. Increasingly, payers demand to know the value of the
-tests, with value equaling quality per unit of cost. Payers want
-laboratories to prove that tests are cost-effective; as reimbursement
-rates decline for many standard laboratory tests, the incentives for
-automated reflex testing rise for many clinical laboratories
-[@hernandez2003]. Unnecessary laboratory tests are a significant source
-of waste in the United States healthcare system. Prior studies suggest
-that 20% of labs performed are unnecessary, wasting 200 billion dollars
-each year [@li2022].
+Health spending in the U.S. increased by 4.6% in 2019 to \$3.8 trillion or \$11,582 per capita. This growth rate is in line with 2018 (4.7 percent) and slightly faster than what was observed in 2017 (4.3 percent) [@americanmedicalassociation2021]. Although laboratory costs comprise only about 5% of the healthcare budget in the United States, it is estimated that laboratory services drive up to 70% of all downstream medical decisions, which encompass a substantial portion of the budget [@ma2019]. As healthcare budgets increase, payers, including Medicare, commercial insurers, and employers, will demand accountability and eliminate the abuse and misuse of ineffective testing strategies [@hernandez2003]. Increasingly, payers demand to know the value of the tests, with value equaling quality per unit of cost. Payers want laboratories to prove that tests are cost-effective; as reimbursement rates decline for many standard laboratory tests, the incentives for automated reflex testing rise for many clinical laboratories [@hernandez2003]. Unnecessary laboratory tests are a significant source of waste in the United States healthcare system. Prior studies suggest that 20% of labs performed are unnecessary, wasting 200 billion dollars each year [@li2022].
 
-A typical example of reflex testing is thyrotropin (TSH), relaxing to
-free thyroxine (Free T4 or FT4). TSH measurement is a sensitive
-screening test for thyroid dysfunction. Guidelines from the American
-Thyroid Association, the American Association of Clinical
-Endocrinologists, and the National Academy of Clinical Biochemistry have
-endorsed TSH measurement as the best first-line strategy for detecting
-thyroid dysfunction in most clinical settings [@plebani2020].
-Traditionally the cutoff for reflex testing was simply the reference
-range for a patient's sex and race. However, recent studies have
-suggested that widening these ranges reduces reflex testing by up to 34%
-[@plebani2020]. In an additional study, the authors concluded that the
-TSH reference range leading to reflex Free T4 testing could likely be
-widened to decrease the number of unnecessary Free T4 measurements
-performed. This reduction would reduce overall costs to the medical
-system without likely causing negative consequences of missing the
-detection of people with thyroid hormone abnormalities
-[@whitneyw.woodmansee2018].
+A typical example of reflex testing is thyrotropin (TSH), relaxing to free thyroxine (Free T4 or FT4). TSH measurement is a sensitive screening test for thyroid dysfunction. Guidelines from the American Thyroid Association, the American Association of Clinical Endocrinologists, and the National Academy of Clinical Biochemistry have endorsed TSH measurement as the best first-line strategy for detecting thyroid dysfunction in most clinical settings [@plebani2020]. Traditionally the cutoff for reflex testing was simply the reference range for a patient's sex and race. However, recent studies have suggested that widening these ranges reduces reflex testing by up to 34% [@plebani2020]. In an additional study, the authors concluded that the TSH reference range leading to reflex Free T4 testing could likely be widened to decrease the number of unnecessary Free T4 measurements performed. This reduction would reduce overall costs to the medical system without likely causing negative consequences of missing the detection of people with thyroid hormone abnormalities [@whitneyw.woodmansee2018].
 
 <!--# This paragraph should be written -->
 
-The reduction in testing aside, the hard-coded rule still exists.
-Additionally, machine learning may predict missing values in a patient's
-record or even suggest further testing on a particular patient. In a
-study at Massachusetts General hospital, researchers predicted ferritin
-results based on already run laboratory testing [@charnaalbert2020].
+The reduction in testing aside, the hard-coded rule still exists. Additionally, machine learning may predict missing values in a patient's record or even suggest further testing on a particular patient. In a study at Massachusetts General hospital, researchers predicted ferritin results based on already run laboratory testing [@charnaalbert2020].
+
+## Purposed Study Set Up
+
+Using the Medical Information Mart for Intensive Care (MIMIC) IV Database develop and test a machine learning algorithm to determine if TSH reflex testing can be further reduced.
+
+The MIMIC-IV database contains patient records from 2008 to 2019 for patients admitted to the critical care units of Beth Israel Deaconess Medical Center. It is a common database used for various studies. The data will be cleaned and tided to contain various patient demographics, and all available laboratory testing for each patient. The exact structure of the cleaned data will be determined later. Once cleaned the data will be split into a training and testing data set. The training data will be used to develop various machine learning algorithms to attempt to develop an algorithm that can perform better then the hard coded rules in place today. The study will primarily focus on TSH reflex testing as this is the most common reflex test used in most laboratories. The hypothesis however is that this model could be used for many different types of reflex testing in the lab.

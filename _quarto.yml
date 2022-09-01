@@ -9,8 +9,7 @@ book:
     - index.qmd
     - chapter2.qmd
     - references.qmd
-  appendices:
-    - appendices/survey.qmd
+
 
 bibliography: references.bib
 csl: apa.csl
