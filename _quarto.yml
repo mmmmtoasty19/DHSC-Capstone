@@ -16,10 +16,11 @@ bibliography: references.bib
 csl: apa.csl
 
 format:
-  html:
-    theme: journal
+  #html:
+    #theme: journal
   docx:
     reference-doc: extras/custom-reference.docx
+    number-sections: false
 
 
 editor: visual

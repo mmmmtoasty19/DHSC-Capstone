@@ -1,3 +1,5 @@
+# Draft Survey
+
 ## Demographics
 
 What is your current role?
@@ -6,6 +8,25 @@ Hospital Size?
 
 Annual Test Volume?
 
+## Current Practices
+
+Does your lab auto verify tests?
+
+How was the criteria developed?
+
+Does your lab preform reflex testings?
+
+How was the criteria for reflex developed?
+
 ## Features
 
 What is your current level of understanding of Machine Learning?
+
+Do you believe auto verification could be improved?
+
+How comfortable would you be with an algorithm verifying tests?
+
+What would be the biggest hurdles to implementing this system? (list
+hurdles)
+
+....
