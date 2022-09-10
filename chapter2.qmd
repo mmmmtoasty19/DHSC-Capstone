@@ -1,1 +1,90 @@
 # Literature Review
+
+The application of machine learning in medicine has garnered enormous
+attention over the past decade [@rabbani2022]. Artificial intelligence
+(AI) and especially the subdiscipline of machine learning (ML) have
+become hot topics that are generating increasing interest among
+laboratory professionals. AI is a rather broad term and can be defined
+as the theory and development of computer systems to perform complex
+tasks normally requiring human intelligence, such as decision-making,
+visual perception, speech recognition, and translation between
+languages. ML is the science of programming, which gives computers the
+ability to learn from data without being explicitly programmed
+[@debruyne2021]. The ever wider use of ML in clinical and basic medical
+research is reflected in the number of titles and abstracts of papers
+indexed on PubMed and published until 2006 as compared to 2007--2017,
+with a nearly 10-fold increase from 1000 to slightly more than 9000
+articles in the that time frame [@cabitza2018]. A literature review by
+Rabbani et al. found 39 articles pertaining to the field of clinical
+chemistry in laboratory medicine between 2011 and 2021 [-@rabbani2022].
+
+## A Brief Primer on Machine Learning
+
+While the aim of this literature review is not to provide an extensive
+representation of the mathematics behind ML algorithms, some basic
+concepts will be introduced to allow a sufficient understanding of the
+topics discussed in the paper. ML models can be classified into broad
+categories based on several criteria, such as the type of supervision,
+whether are not the algorithm can learn incrementally from an incoming
+stream of data (batch and online learning), and how they generalize
+(instance-based versus model-based learning) [@debruyne2021]. Rabbani et
+al. further classified the specfic clinical chemistry uses into five
+board categories, predicting laboratory test values, improving
+laboratory utilization, automating laboratory processes, promoting
+precision laboratory test interpretation, and improving laboratory
+medicine information systems [-@rabbani2022].
+
+### Supervised vs Unsupervised Learning
+
+Four important categories can be distinguished based on the amount and
+type of supervision the models receive during training: supervised,
+unsupervised, semi-supervised, and reinforcement learning. In supervised
+learning, training data are labeled and data samples are predicted with
+knowledge about the desired solutions [@debruyne2021]. They are
+typically used for classification and regression purposes. Some of the
+most important supervised algorithms are Linear Regression, Logistic
+Regression, K-Nearest Neighbors (KNN), Support Vector Machines (SVMs),
+Decision Trees (DTs), Random Forests (RFs), and supervised neural
+networks. In unsupervised learning, training data are unlabeled. In
+other words, observations are classified without any prior data sample
+knowledge [@debruyne2021]. Unsupervised algorithms can be used for
+clustering (e.g. k-means clustering, density-based spatial clustering of
+applications with noise, hierarchical cluster analysis), visualization
+and dimensionality reduction (e.g. principal component analysis (PCA),
+kernel PCA, locally linear embedding, t-distributed stochastic neighbor
+embedding), anomaly detection and novelty detection (e.g. one-class SVM,
+isolation forest) and association rule learning (e.g. apriori, eclat).
+However, some models can deal with partially labeled training data (i.e.
+semi-supervised learning). At last, in reinforcement learning, an agent
+(i.e. the learning system) learns what actions to take to optimize the
+outcome of a strategy (i.e. a policy) or to get the maximum cumulative
+reward [@debruyne2021]. This system resembles humans learning to ride a
+bike and can typically be used in learning games, such as Go, chess, or
+even poker, or settings where the outcome is continuous rather than
+dichotomous (i.e. right or wrong)[@debruyne2021]. The proposed study
+will use supervised learning, as the data is labeled and an particular
+outcome is expected.
+
+### Machine Learning Workflow
+
+Since this study will focus of supervised learning the review will focus
+on that. Machine learning can be broken into three board steps, data
+cleaning and processing, training and testing the model, finally the
+model is evaluated, deployed, and monitored [@debruyne2021]. In the
+first phase data is collected, cleaned, and labeled. Data cleaning or
+pre-processing is one of the most important steps in designing a
+reliable model [@debruyne2021]. Some examples of common pre-processing
+steps are handling of missing data, detection of outliers, and encoding
+of categorical data. Data at this stage is also split into training and
+testing data, typically following somewhere near a 70-30 split. These
+two data sets are used for different portions of the rest of model
+building. The Training set data is used to develop feature sets, train
+our algorithms, tune hyperparameters, compare models, and all of the
+other activities required to choose a final model (e.g., the model we
+want to put into production) [@boehmke2020]. Once the final model is
+chosen the test set data is used to estimate an unbiased assessment of
+the model's performance, which we refer to as the generalization error
+[@boehmke2020]. Most time (as much as 80%) is invested into the data
+processes stage.
+
+#### 
