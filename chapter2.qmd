@@ -85,6 +85,27 @@ want to put into production) [@boehmke2020]. Once the final model is
 chosen the test set data is used to estimate an unbiased assessment of
 the model's performance, which we refer to as the generalization error
 [@boehmke2020]. Most time (as much as 80%) is invested into the data
-processes stage.
+processes stage. In the second phase, a ML model is trained and tested
+on the collected data after feature engineering. Feature engineering is
+performed on the training set to select a good set of features to train
+on. The ML model will only be able to learn efficiently if the training
+data contains enough relevant features and minimal irrelevant ones
+[@géron2019]. The data is then run through various models, Linear
+Regression, Logistic Regression, K-Nearest Neighbors (KNN), Support
+Vector Machines (SVMs), Decision Trees (DTs), Random Forests (RFs). Once
+a model is selected the third phase begins to evaluate the models
+performance. Historically, the performance of statistical models was
+largely based on goodness-of-fit tests and assessment of residuals.
+Unfortunately, misleading conclusions may follow from predictive models
+that pass these kinds of assessments [@breiman2001]. Today, it has
+become widely accepted that a more sound approach to assessing model
+performance is to assess the predictive accuracy via loss functions
+[@boehmke2020]. Loss functions are metrics that compare the predicted
+values to the actual value (the output of a loss function is often
+referred to as the error or pseudo residual). When performing resampling
+methods, we assess the predicted values for a validation set compared to
+the actual target value. The overall validation error of the model is
+computed by aggregating the errors across the entire validation data set
+[@boehmke2020].
 
 #### 
