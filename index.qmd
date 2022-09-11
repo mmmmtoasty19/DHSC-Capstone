@@ -20,16 +20,11 @@ existing test requests at various stages of the analytical process
 testing, those tests added automatically by a set of rules established
 in each laboratory. In most current clinical laboratories, reflex
 testing is performed with a 'hard' cutoff, using a specifically
-established range with no means of flexibility [@murphy2021].
-
-<!--# Rewrite this section -->
-
-This study will examine the use of Machine learning to develop
-algorithms to allow flexibility for automatic reflex testing in clinical
-chemistry. The goal is to fill the gap between hard coded reflex testing
-and fully manual reflective testing using machine learning algorithms.
-
-<!--#  -->
+established range with no means of flexibility [@murphy2021]. This study
+will examine the use of Machine learning to develop algorithms to allow
+flexibility for automatic reflex testing in clinical chemistry. The goal
+is to fill the gap between hard coded reflex testing and fully manual
+reflective testing using machine learning algorithms.
 
 ## Statement of Problem
 
@@ -77,15 +72,8 @@ widened to decrease the number of unnecessary Free T4 measurements
 performed. This reduction would reduce overall costs to the medical
 system without likely causing negative consequences of missing the
 detection of people with thyroid hormone abnormalities
-[@whitneyw.woodmansee2018].
-
-<!--# This paragraph should be written and most removed-->
-
-The reduction in testing aside, the hard-coded rule still exists.
-Additionally, machine learning may predict missing values in a patient's
-record or even suggest further testing on a particular patient. In a
-study at Massachusetts General hospital, researchers predicted ferritin
-results based on already run laboratory testing [@charnaalbert2020].
+[@woodmansee2018]. Even with the potential reduction in testing the
+hard-coded reflex rule still exists.
 
 ## Purposed Study Set Up
 

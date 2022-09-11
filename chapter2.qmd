@@ -112,31 +112,48 @@ computed by aggregating the errors across the entire validation data set
 
 ### Machine Learning in the Clinical Laboratory
 
-<!--# Can I copy this table? -->
+<!--# Table needs to be modified -->
 
-| **Author and Year** | **Objective and Machine Learning Task**                               | **Best Model** | **Major Themes** |
-|-------------|---------------------------------|-------------|-------------|
-| Azarkhish (2012)    | Predict iron deficiency anemia and serum iron levels from CBC indices | Neural Network | Prediction       |
-
-Cao (2012) \|
-
-                    Triage manual review for urinalysis samples                                                                      |                
-                                                                                                                                                      
-                                                                                                                                      Tree-based      | Automation       |
-
-| 
-
-Yang (2013) \|
-
-                    Predict normal reference ranges of ESR for various laboratories based on geographic and other clinical features  |                
-                                                                                                                                                      
-                                                                                                                                      Neural Network  |                  
-                                                                                                                                                                         
-                                                                                                                                                       Interpretation    |
+| **Author and Year** | **Objective and Machine Learning Task**                                                                         | **Best Model** | **Major Themes** |
+|---------------|-----------------------------|---------------|---------------|
+| Azarkhish (2012)    | Predict iron deficiency anemia and serum iron levels from CBC indices                                           | Neural Network | Prediction       |
+| Cao (2012)          | Triage manual review for urinalysis samples                                                                     | Tree-based     | Automation       |
+| Yang (2013)         | Predict normal reference ranges of ESR for various laboratories based on geographic and other clinical features | Neural Network | Interpretation   |
 
 : Table 1. Summary of characteristics of machine learning algorithms
 [@rabbani2022].
 
-### 
+<!--# Need to fill in this section -->
 
-#### 
+## Reflex Testing
+
+The laboratory diagnosis of thyroid dysfunction relies on the
+measurement of circulating concentrations of thyrotropin (TSH), free
+thyroxine (fT4), and, in some cases, free triiodothyronine (fT3). TSH
+measurement is generally regarded as the most sensitive initial
+laboratory test for screening individuals for thyroid hormone
+abnormalities [@woodmansee2018]. TSH and fT4 have a complex, nonlinear
+relationship, such that small changes in fT4 result in relatively large
+changes in TSH [@plebani2020]. Many clinicians and laboratories check
+TSH alone as the initial test for thyroid problems and then only add a
+Free T4 measurement if the TSH is abnormal (outside the laboratory
+normal reference range), this is known as reflex testing
+[@woodmansee2018]. Reflex testing became possible with the advent of
+laboratory information systems (LIS) that were sufficiently flexible to
+permit modification of existing test requests at various stages of the
+analytical process [@srivastava2010]. Reflex testing is widely used, the
+major aim being to optimize the use of laboratory tests. However the
+common practice of reflex testing relies simply on hard coded rules that
+allow no flexibility. For instance in the case of TSH, free T4 will be
+added to the patient order whenever the value falls outside of the
+established laboratory reference range. This bring into the fold the
+issue that the thresholds used to trigger reflex addition of tests vary
+widely. In a study by Murphy he found the hypocalcaemic threshold to
+trigger magnesium measurement varied from 1.50 mmol/L up to 2.20 mmol/L
+[-@murphy2021]. Even allowing for differences in the nature, size and
+staffing of hospital laboratories, and populations served, the extent of
+the observed variation invites scrutiny [@murphy2021].
+
+<!--# insert table and study from strivastava about hypo/hyper thyroid -->
+
+<!--# data from woodmansee and plebani -->
