@@ -24,3 +24,6 @@ format:
 
 editor: visual
 
+exectue:
+  freeze: auto
+
