@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "Reflex Testing and Machine Learning in the Clinical Laboratory"
+  title: "Reflex Testing using Machine Learning in the Clinical Laboratory"
   author: "Kyle Belanger"
   date: "8/2/2022"
   chapters:
