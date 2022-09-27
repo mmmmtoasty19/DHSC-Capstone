@@ -1,0 +1,7 @@
+# Chapter 3
+
+## Proposed Study Set Up
+
+Using the Medical Information Mart for Intensive Care (MIMIC) IV Database develop and test a machine learning algorithm to determine if TSH reflex testing can be further reduced.
+
+The MIMIC-IV database contains patient records from 2008 to 2019 for patients admitted to the critical care units of Beth Israel Deaconess Medical Center. It is a common database used for various studies. The data will be cleaned and tided to contain various patient demographics, and all available laboratory testing for each patient. The exact structure of the cleaned data will be determined later. Once cleaned the data will be split into a training and testing data set. The training data will be used to develop various machine learning algorithms to attempt to develop an algorithm that can perform better then the hard coded rules in place today. The study will primarily focus on TSH reflex testing as this is the most common reflex test used in most laboratories. The hypothesis however is that this model could be used for many different types of reflex testing in the lab.

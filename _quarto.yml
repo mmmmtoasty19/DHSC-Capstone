@@ -1,0 +1,30 @@
+project:
+  type: book
+
+book:
+  title: "DHSC-Capstone"
+  author: "Kyle Belanger"
+  date: "8/2/2022"
+  chapters:
+    - index.qmd
+    - chapter2.qmd
+    - chapter3.qmd
+    - references.qmd
+
+
+bibliography: references.bib
+csl: apa.csl
+
+format:
+  html:
+    theme: journal
+  docx:
+    reference-doc: extras/custom-reference.docx
+    number-sections: false
+
+
+editor: visual
+
+exectue:
+  freeze: auto
+
