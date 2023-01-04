@@ -12,8 +12,9 @@ cat("\014") # Clear the console
 box::use(
   magrittr[`%>%`]
   ,RSQLite
-  ,DBI
+  ,DBI[dbConnect,dbDisconnect,dbWriteTable]
   ,here[here]
+  ,readr
 )
 
 
@@ -25,17 +26,34 @@ box::use(
 
 # create database ---------------------------------------------------------
 
-mimicDB <- DBI$dbConnect(
+mimicDB <- dbConnect(
   RSQLite$SQLite()
   ,here("ML","data-unshared","mimicDB.sqlite")
   )
 
 
+# create labevents table
+readr$read_csv_chunked(
+  here("ML","data-unshared", "labevents.csv")
+  ,callback = function(chunk,dummy){
+    dbWriteTable(mimicDB, "labevents", chunk, append = TRUE)
+    }
+  ,chunk_size = 10000
+  ,col_types = "_d_ddTT_d______"
+  )
+
+
+# create patient table
+
+readr$read_csv(
+  here("ML","data-unshared","patients.csv")
+) %>%
+  dbWriteTable(mimicDB,"patients", .)
 
 
 
 
 # close database ----------------------------------------------------------
 
-DBI$dbDisconnect(mimicDB)
+dbDisconnect(mimicDB)
 
