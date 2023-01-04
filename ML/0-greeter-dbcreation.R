@@ -11,4 +11,31 @@ cat("\014") # Clear the console
 
 box::use(
   magrittr[`%>%`]
+  ,RSQLite
+  ,DBI
+  ,here[here]
 )
+
+
+
+# globals -----------------------------------------------------------------
+
+
+
+
+# create database ---------------------------------------------------------
+
+mimicDB <- DBI$dbConnect(
+  RSQLite$SQLite()
+  ,here("ML","data-unshared","mimicDB.sqlite")
+  )
+
+
+
+
+
+
+# close database ----------------------------------------------------------
+
+DBI$dbDisconnect(mimicDB)
+
