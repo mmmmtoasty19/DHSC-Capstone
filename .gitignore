@@ -52,3 +52,8 @@ rsconnect/
 
 /.quarto/
 _book/
+
+
+# Do not share data
+/ML/data-unshared
+ML/praticeML.R
