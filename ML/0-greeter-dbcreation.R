@@ -50,7 +50,12 @@ readr$read_csv(
 ) %>%
   dbWriteTable(mimicDB,"patients", .)
 
+# create labitems table
 
+readr$read_csv(
+  here("ML","data-unshared","d_labitems.csv")
+) %>%
+  dbWriteTable(mimicDB,"labitems", .)
 
 
 # close database ----------------------------------------------------------
