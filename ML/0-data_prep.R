@@ -23,7 +23,7 @@ db <- dbConnect(
 
 #item list shows two different numbers for a few tests, second set of items do not have
 # any results that are on the same samples as TSH and Free T4
-test_list <- c(
+test_list_cmp <- c(
   50862 #Albumin
   ,50863	#Alkaline Phosphatase
   ,50861	#Alanine Aminotransferase (ALT)
@@ -42,39 +42,43 @@ test_list <- c(
   ,50995	#Thyroxine (T4), Free
 )
 
+test_list_bmp <- c(
+  51006	#Urea Nitrogen
+  ,50893	#Calcium, Total
+  ,50882	#Bicarbonate
+  ,50902	#Chloride
+  ,50912	#Creatinine
+  ,50931	#Glucose
+  ,50971	#Potassium
+  ,50983	#Sodium
+  ,50993	#Thyroid Stimulating Hormone
+  ,50995	#Thyroxine (T4), Free
+)
 
+# TSH Ref Range from File 0.27 - 4.2 uIU/mL
+# Free T4 Ref Range from File 0.93 - 1.7 ng/dL
 
 # load data ---------------------------------------------------------------
 
-ds <- dplyr$tbl(db, "labevents") %>%
-  dplyr$filter(itemid %in% test_list) %>%
-  dplyr$select(-charttime,-storetime) %>%
-  tidyr$pivot_wider(
-    id_cols = c(subject_id,specimen_id)
-    ,names_from = itemid
-    ,values_from = valuenum
-    ) %>%
-  dplyr$filter(!is.na(`50993`) & !is.na(`50995`)) %>%
-  dplyr$collect()
+# most likely will not use this as there are not as many complete rows.  However
+# gathering it just in case.
+# first is using specimen id, usable data set is using chart time as it appears
+# LIS uses different id's for groups of tests
+#
+# ds_cmp <- dplyr$tbl(db, "labevents") %>%
+#   dplyr$filter(itemid %in% test_list_cmp) %>%
+#   dplyr$select(-charttime,-storetime) %>%
+#   tidyr$pivot_wider(
+#     id_cols = c(subject_id,specimen_id)
+#     ,names_from = itemid
+#     ,values_from = valuenum
+#     ) %>%
+#   dplyr$filter(!is.na(`50993`) & !is.na(`50995`)) %>%
+#   dplyr$filter(dplyr$across(where(is.numeric), ~!is.na(.x))) %>%
+#   dplyr$collect()
 
-
-ds %>% dplyr$filter(dplyr$across(where(is.numeric), ~!is.na(.x)))
-
-count <- data.frame(colSums(is.na(ds))) %>% tibble::rownames_to_column()
-
-
-testds <- readr::read_csv(
-  here("ML","data-unshared", "labevents.csv")
-  ,col_types = "_d_ddTT_d______"
-  ,n_max = 100
-)
-
-
-#using chart time instead of spceimen id results in less NA values.
-# total protien still have very low resulting
-
-ds1 <- dplyr$tbl(db, "labevents") %>%
-  dplyr$filter(itemid %in% test_list) %>%
+ds_cmp <- dplyr$tbl(db, "labevents") %>%
+  dplyr$filter(itemid %in% test_list_cmp) %>%
   dplyr$select(-storetime) %>%
   tidyr$pivot_wider(
     id_cols = c(subject_id,charttime)
@@ -84,13 +88,24 @@ ds1 <- dplyr$tbl(db, "labevents") %>%
   dplyr$filter(!is.na(`50993`) & !is.na(`50995`)) %>%
   dplyr$collect()
 
-count2 <- data.frame(colSums(is.na(ds1))) %>% tibble::rownames_to_column()
+#this keeps failing if run as part of the above query.  Moving here to keep going
+# keeps only rows that have values for all columns
+ds_cmp <- ds_cmp %>% dplyr$filter(dplyr$if_all(.fns = ~!is.na(.)))
 
-counts <- count %>%
-  dplyr$left_join(count2)
 
-# using charttime, total of 5,424 rows with all values filled in
-ds1 %>% dplyr$filter(dplyr$across(where(is.numeric), ~!is.na(.x)))
+ds_bmp <- dplyr$tbl(db, "labevents") %>%
+  dplyr$filter(itemid %in% test_list_bmp) %>%
+  dplyr$select(-storetime) %>%
+  tidyr$pivot_wider(
+    id_cols = c(subject_id,charttime)
+    ,names_from = itemid
+    ,values_from = valuenum
+  ) %>%
+  dplyr$filter(!is.na(`50993`) & !is.na(`50995`)) %>%
+  dplyr$collect()
+
+ds_bmp <- ds_bmp %>% dplyr$filter(dplyr$if_all(.fns = ~!is.na(.)))
+
 
 # close database ----------------------------------------------------------
 
