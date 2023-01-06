@@ -60,6 +60,17 @@ test_list_bmp <- c(
 
 # load data ---------------------------------------------------------------
 
+# load patients first to add to lab values
+patients <- dplyr$tbl(db, "patients") %>%
+  dplyr$select(-anchor_year, -anchor_year_group, -dod) %>%
+  dplyr$collect()
+
+#this function is failing if run as part of the DB query
+# Recoding Male = 1, Female = 2
+
+patients <- patients %>%
+  dplyr$mutate(dplyr$across(gender, ~dplyr$recode(gender, "M" = 1, "F" = 2)))
+
 # most likely will not use this as there are not as many complete rows.  However
 # gathering it just in case.
 # first is using specimen id, usable data set is using chart time as it appears
@@ -90,7 +101,8 @@ ds_cmp <- dplyr$tbl(db, "labevents") %>%
 
 #this keeps failing if run as part of the above query.  Moving here to keep going
 # keeps only rows that have values for all columns
-ds_cmp <- ds_cmp %>% dplyr$filter(dplyr$if_all(.fns = ~!is.na(.)))
+ds_cmp <- ds_cmp %>% dplyr$filter(dplyr$if_all(.fns = ~!is.na(.))) %>%
+  dplyr$left_join(patients, by = c("subject_id" = "subject_id"))
 
 
 ds_bmp <- dplyr$tbl(db, "labevents") %>%
@@ -105,6 +117,10 @@ ds_bmp <- dplyr$tbl(db, "labevents") %>%
   dplyr$collect()
 
 ds_bmp <- ds_bmp %>% dplyr$filter(dplyr$if_all(.fns = ~!is.na(.)))
+
+
+
+
 
 
 # close database ----------------------------------------------------------
