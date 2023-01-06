@@ -101,8 +101,10 @@ ds_cmp <- dplyr$tbl(db, "labevents") %>%
 
 #this keeps failing if run as part of the above query.  Moving here to keep going
 # keeps only rows that have values for all columns
-ds_cmp <- ds_cmp %>% dplyr$filter(dplyr$if_all(.fns = ~!is.na(.))) %>%
-  dplyr$left_join(patients, by = c("subject_id" = "subject_id"))
+ds_cmp <- patients %>%
+  dplyr$left_join(ds_cmp, by = c("subject_id" = "subject_id")) %>%
+  dplyr$filter(dplyr$if_all(.fns = ~!is.na(.)))
+
 
 
 ds_bmp <- dplyr$tbl(db, "labevents") %>%
@@ -116,7 +118,9 @@ ds_bmp <- dplyr$tbl(db, "labevents") %>%
   dplyr$filter(!is.na(`50993`) & !is.na(`50995`)) %>%
   dplyr$collect()
 
-ds_bmp <- ds_bmp %>% dplyr$filter(dplyr$if_all(.fns = ~!is.na(.)))
+ds_bmp <- patients %>%
+  dplyr$left_join(ds_bmp, by = c("subject_id" = "subject_id")) %>%
+  dplyr$filter(dplyr$if_all(.fns = ~!is.na(.)))
 
 
 
