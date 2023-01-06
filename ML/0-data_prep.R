@@ -70,7 +70,8 @@ testds <- readr::read_csv(
 )
 
 
-
+#using chart time instead of spceimen id results in less NA values.
+# total protien still have very low resulting
 
 ds1 <- dplyr$tbl(db, "labevents") %>%
   dplyr$filter(itemid %in% test_list) %>%
@@ -87,6 +88,9 @@ count2 <- data.frame(colSums(is.na(ds1))) %>% tibble::rownames_to_column()
 
 counts <- count %>%
   dplyr$left_join(count2)
+
+# using charttime, total of 5,424 rows with all values filled in
+ds1 %>% dplyr$filter(dplyr$across(where(is.numeric), ~!is.na(.x)))
 
 # close database ----------------------------------------------------------
 
