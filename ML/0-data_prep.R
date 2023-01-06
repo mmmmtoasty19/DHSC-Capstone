@@ -10,6 +10,8 @@ box::use(
   ,DBI[dbConnect,dbDisconnect]
   ,here[here]
   ,dplyr
+  ,dbplyr
+  ,tidyr
 )
 
 # globals -----------------------------------------------------------------
@@ -43,8 +45,18 @@ test_list <- c(
 
 # load data ---------------------------------------------------------------
 
-ds <- dplyr$tbl(db, "labevents") %>% dplyr$filter(itemid %in% test_list) %>% dplyr$collect()
+ds <- dplyr$tbl(db, "labevents") %>%
+  dplyr$filter(itemid %in% test_list) %>%
+  dplyr$select(-charttime,-storetime) %>%
+  tidyr$pivot_wider(
+    id_cols = c(subject_id,specimen_id)
+    ,names_from = itemid
+    ,values_from = valuenum
+    ) %>%
+  dplyr$filter(!is.na(`50993`)) %>%
+  dplyr$collect()
 
+ds <- ds %>% dplyr$collect()
 
 # close database ----------------------------------------------------------
 
