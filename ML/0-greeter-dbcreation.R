@@ -39,7 +39,7 @@ readr$read_csv_chunked(
     dbWriteTable(mimicDB, "labevents", chunk, append = TRUE)
     }
   ,chunk_size = 10000
-  ,col_types = "_d_ddTT_d______"
+  ,col_types = "_d_dd_TT_d______"
   )
 
 
