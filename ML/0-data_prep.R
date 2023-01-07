@@ -132,7 +132,7 @@ ds_low_tsh <- ds_bmp %>%
   readr$write_rds(
     here("ML","data-unshared","ds_low_tsh.RDS")
   )
-S
+
 # close database ----------------------------------------------------------
 
 dbDisconnect(db)
