@@ -14,6 +14,10 @@ box::use(
 )
 
 
+# globals -----------------------------------------------------------------
+
+
+
 
 
 # load data ---------------------------------------------------------------
@@ -37,8 +41,13 @@ ds_high_tsh <- ds_high_tsh %>%
 
 # basic visualization -----------------------------------------------------
 
+test <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
+  tibble::rownames_to_column()
+
+
+
 g1 <- ds_high_tsh %>%
   dplyr$select(-subject_id, - charttime) %>%
   dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2))) %>%
-  tidyr$pivot_longer(cols = dplyr$everything()) %>%
+  tidyr$pivot_longer(cols = dplyr$everything())
 
