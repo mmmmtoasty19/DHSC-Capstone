@@ -1,3 +1,5 @@
+
+
 rm(list = ls(all.names = TRUE)) # Clear the memory of variables from previous run.
 cat("\014") # Clear the console
 
@@ -16,13 +18,29 @@ box::use(
 
 # globals -----------------------------------------------------------------
 
-
+test_list_names <- c(
+   "BUN"   = "51006"
+   ,"CA"   = "50893"
+   ,"CO2"  = "50882"
+   ,"CL"   = "50902"
+   ,"CREA" = "50912"
+   ,"GLU"  = "50931"
+   ,"K"    = "50971"
+   ,"NA"   = "50983"
+   ,"TSH"  = "50993"
+   ,"FT4"  = "50995"
+   ,"RBC"  = "51279"
+   ,"WBC"  = "51300"
+   ,"HCT"  = "51221"
+   ,"HGB"  = "51222"
+   ,"PLT"  = "51265"
+)
 
 
 
 # load data ---------------------------------------------------------------
 
-ds_high_tsh <-   readr$read_rds(
+ds_high_tsh_raw <-   readr$read_rds(
     here("ML","data-unshared","ds_high_tsh.RDS")
   )
 
@@ -34,8 +52,11 @@ ds_high_tsh <-   readr$read_rds(
 # using the FT4 Referance range low as the cut off (0.93)
 
 
-ds_high_tsh <- ds_high_tsh %>%
-  dplyr$mutate(ft4_dia = dplyr$if_else(`50995` < 0.93, 1, 0))
+ds_high_tsh <- ds_high_tsh_raw %>%
+  dplyr$mutate(ft4_dia = dplyr$if_else(`50995` < 0.93, 1, 0)) %>%
+  #can rename with a vector using either of these
+  # dplyr$rename_with(~names(test_list_names), dplyr$all_of(test_list_names))
+  dplyr$rename(!!!test_list_names)
 
 
 
