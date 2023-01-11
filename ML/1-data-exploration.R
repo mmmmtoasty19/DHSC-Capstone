@@ -82,3 +82,16 @@ g1 <- ds_high_tsh %>%
   gp2$geom_histogram() +
   gp2$facet_wrap(~name, scales = "free")
 g1
+
+
+
+
+g2 <- ds_high_tsh %>%
+  dplyr$select(-gender, -subject_id, - charttime) %>%
+  tidyr$pivot_longer(cols = !ft4_dia) %>%
+  ggplot(aes(x = factor(ft4_dia), y = value, fill = factor(ft4_dia))) +
+  gp2$geom_boxplot(outlier.shape = NA, na.rm = TRUE) +
+  gp2$geom_jitter(size=.7, width=.1, alpha=.5) +
+  gp2$facet_wrap(~name, scales = "free")
+
+g2
