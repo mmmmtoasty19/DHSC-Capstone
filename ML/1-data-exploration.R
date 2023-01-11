@@ -12,7 +12,7 @@ box::use(
   ,dplyr
   ,readr
   ,tidyr
-  ,ggplot2
+  ,gp2 = ggplot2[ggplot, aes]
 )
 
 
@@ -62,13 +62,23 @@ ds_high_tsh <- ds_high_tsh_raw %>%
 
 # basic visualization -----------------------------------------------------
 
-test <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
-  tibble::rownames_to_column()
+g_count <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
+  tibble::rownames_to_column() %>%
+  ggplot(aes(x = rowname, y = value)) +
+  gp2$geom_col() +
+  gp2$theme(
+    axis.text.x = gp2$element_text(angle = 90)
+  )
+
+g_count
 
 
-
+#quick recode of gender, will still do recoding during feature engineering
 g1 <- ds_high_tsh %>%
   dplyr$select(-subject_id, - charttime) %>%
   dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2))) %>%
-  tidyr$pivot_longer(cols = dplyr$everything())
-
+  tidyr$pivot_longer(cols = dplyr$everything()) %>%
+  ggplot(aes(x = value)) +
+  gp2$geom_histogram() +
+  gp2$facet_wrap(~name, scales = "free")
+g1
