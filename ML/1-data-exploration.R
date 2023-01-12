@@ -72,6 +72,12 @@ g_count <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
 
 g_count
 
+ds_corr <- cor(ds_high_tsh %>% dplyr$select(-subject_id, - charttime)
+               %>% dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2)))
+               ,use = "complete.obs")
+
+corrplot::corrplot(ds_corr, method = "number")
+
 
 #quick recode of gender, will still do recoding during feature engineering
 g1 <- ds_high_tsh %>%
@@ -91,7 +97,7 @@ g2 <- ds_high_tsh %>%
   tidyr$pivot_longer(cols = !ft4_dia) %>%
   ggplot(aes(x = factor(ft4_dia), y = value, fill = factor(ft4_dia))) +
   gp2$geom_boxplot(outlier.shape = NA, na.rm = TRUE) +
-  gp2$geom_jitter(size=.7, width=.1, alpha=.5) +
+  gp2$geom_jitter(size=.7, width=.1, alpha=.5, na.rm = TRUE) +
   gp2$facet_wrap(~name, scales = "free")
 
 g2
