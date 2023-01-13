@@ -76,7 +76,17 @@ ds_corr <- cor(ds_high_tsh %>% dplyr$select(-subject_id, - charttime)
                %>% dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2)))
                ,use = "complete.obs")
 
+
+#code for saving corr plot
+png(here("figures","corrplot_high.png"), type = 'cairo')
+
 corrplot::corrplot(ds_corr, method = "number")
+
+dev.off()
+
+
+
+
 
 
 #quick recode of gender, will still do recoding during feature engineering
