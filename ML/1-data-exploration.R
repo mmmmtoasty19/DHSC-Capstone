@@ -62,6 +62,7 @@ ds_high_tsh <- ds_high_tsh_raw %>%
 
 # basic visualization -----------------------------------------------------
 
+# count of missing values
 g_count <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
   tibble::rownames_to_column() %>%
   ggplot(aes(x = rowname, y = value)) +
@@ -72,6 +73,7 @@ g_count <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
 
 g_count
 
+#corrleation plot
 ds_corr <- cor(ds_high_tsh %>% dplyr$select(-subject_id, - charttime)
                %>% dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2)))
                ,use = "complete.obs")
@@ -86,9 +88,7 @@ dev.off()
 
 
 
-
-
-
+# quick view of distribution of features
 #quick recode of gender, will still do recoding during feature engineering
 g1 <- ds_high_tsh %>%
   dplyr$select(-subject_id, - charttime) %>%
