@@ -56,12 +56,14 @@ ds_high_tsh <- ds_high_tsh_raw %>%
   dplyr$mutate(ft4_dia = dplyr$if_else(`50995` < 0.93, 1, 0)) %>%
   #can rename with a vector using either of these
   # dplyr$rename_with(~names(test_list_names), dplyr$all_of(test_list_names))
-  dplyr$rename(!!!test_list_names)
+  dplyr$rename(!!!test_list_names) %>%
+  dplyr$select(-FT4)
 
 
 
 # basic visualization -----------------------------------------------------
 
+#graph of missing tests
 g_count <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
   tibble::rownames_to_column() %>%
   ggplot(aes(x = rowname, y = value)) +
@@ -69,9 +71,21 @@ g_count <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
   gp2$theme(
     axis.text.x = gp2$element_text(angle = 90)
   )
-
 g_count
 
+#table of missing tests
+dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
+  tibble::rownames_to_column() %>% knitr::kable()
+
+# count of diagnostics ft4 and freq
+t1 <- ds_high_tsh %>%
+  dplyr$count(ft4_dia) %>%
+  dplyr$mutate(freq = n/sum(n)) %>%
+  knitr::kable()
+
+t1
+
+# correlation plot
 ds_corr <- cor(ds_high_tsh %>% dplyr$select(-subject_id, - charttime)
                %>% dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2)))
                ,use = "complete.obs")
@@ -79,14 +93,8 @@ ds_corr <- cor(ds_high_tsh %>% dplyr$select(-subject_id, - charttime)
 
 #code for saving corr plot
 png(here("figures","corrplot_high.png"), type = 'cairo')
-
 corrplot::corrplot(ds_corr, method = "number")
-
 dev.off()
-
-
-
-
 
 
 #quick recode of gender, will still do recoding during feature engineering
@@ -95,13 +103,12 @@ g1 <- ds_high_tsh %>%
   dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2))) %>%
   tidyr$pivot_longer(cols = dplyr$everything()) %>%
   ggplot(aes(x = value)) +
-  gp2$geom_histogram() +
+  gp2$geom_histogram(na.rm = TRUE) +
   gp2$facet_wrap(~name, scales = "free")
 g1
 
 
-
-
+# this takes a bit to load.  No discernable paterns in the data
 g2 <- ds_high_tsh %>%
   dplyr$select(-gender, -subject_id, - charttime) %>%
   tidyr$pivot_longer(cols = !ft4_dia) %>%
@@ -109,5 +116,10 @@ g2 <- ds_high_tsh %>%
   gp2$geom_boxplot(outlier.shape = NA, na.rm = TRUE) +
   gp2$geom_jitter(size=.7, width=.1, alpha=.5, na.rm = TRUE) +
   gp2$facet_wrap(~name, scales = "free")
-
 g2
+
+
+
+
+
+
