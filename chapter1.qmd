@@ -12,33 +12,36 @@ hospitals had clinical laboratories by 1923 [@berger1999]. Before 1960,
 almost all testing in the laboratory was performed using manual methods.
 In the mid-1960s, a limited amount of automated analyzers became
 available, allowing for more rapid testing and running multiple tests at
-the same time [@park2017]. Since these early days of automation in the
-last fifty years, the clinical laboratory has rapidly expanded
-automation techniques. These include pre-packaged ready-to-use reagents,
-automated dispensing, incubation and measurement, automated sample
-processing (e.g., total laboratory automation systems, one- and
-two-dimensional bar codes, radio frequency identification tags),
-multiplexing tests from a single sample (e.g., microarrays), automated
-data processing (e.g., reference range, alert value comparisons, quality
-control assessment), automated interpretation (e.g., auto-verification),
-image analysis (e.g., automated peripheral blood smear morphology -
-CellaVision, whole slide scanning in surgical pathology), and mobile or
-static robots to operate analyzers [@park2017]. This rise in automation
-in the clinical laboratory has also led to the need for more advanced
-computer systems to go along with the advances in instrument technology.
-Over the past few decades, LISs have evolved from relatively narrow,
-often arcane, or home-grown systems into sophisticated systems that are
-more user-friendly and support a broader range of functions and
-integration with other technologies that laboratories deploy
-[@henricks2015]. Modern LISs consist of complex, interrelated computer
-programs and infrastructure that support laboratories' vast array of
-information-processing needs. LISs have functions in all phases of
-patient testing, including specimen and test order intake, specimen
-processing and tracking, support of analysis and interpretation, and
-report creation and distribution. In addition, LISs provide management
-reports and other data that laboratories need to run their operations
-and to support continuous improvement and quality initiatives
-[@henricks2015].
+the same time [@park2017].
+
+Since these early days of automation in the last fifty years, the
+clinical laboratory has rapidly expanded automation techniques. These
+include pre-packaged ready-to-use reagents, automated dispensing,
+incubation and measurement, automated sample processing (e.g., total
+laboratory automation systems, one- and two-dimensional bar codes, radio
+frequency identification tags), multiplexing tests from a single sample
+(e.g., microarrays), automated data processing (e.g., reference range,
+alert value comparisons, quality control assessment), automated
+interpretation (e.g., auto-verification), image analysis (e.g.,
+automated peripheral blood smear morphology - CellaVision, whole slide
+scanning in surgical pathology), and mobile or static robots to operate
+analyzers [@park2017]. This rise in automation in the clinical
+laboratory has also led to the need for more advanced computer systems
+to go along with the advances in instrument technology.
+
+Over the past few decades, Laboratory Information Systems (LIS) have
+evolved from relatively narrow, often arcane, or home-grown systems into
+sophisticated systems that are more user-friendly and support a broader
+range of functions and integration with other technologies that
+laboratories deploy [@henricks2015]. Modern LISs consist of complex,
+interrelated computer programs and infrastructure that support
+laboratories' vast array of information-processing needs. LISs have
+functions in all phases of patient testing, including specimen and test
+order intake, specimen processing and tracking, support of analysis and
+interpretation, and report creation and distribution. In addition, LISs
+provide management reports and other data that laboratories need to run
+their operations and to support continuous improvement and quality
+initiatives [@henricks2015].
 
 The clinical laboratory's primary business purpose is to provide testing
 results requested by physicians and other healthcare professionals. In a
@@ -55,21 +58,22 @@ algorithms; this is defined as 'reflective testing' [@srivastava2010].
 Both reflex and reflective testing became possible with the advent of
 laboratory information systems (LIS) that were sufficiently flexible to
 permit modification of existing test requests at various stages of the
-analytical process [@srivastava2010]. This research study will focus
-specifically on reflex testing, those tests added automatically by a set
-of rules established in each laboratory. In most current clinical
-laboratories, reflex testing is performed with a 'hard' cutoff, using a
-specifically established range with no means of flexibility
-[@murphy2021]. This study will examine the use of Machine learning to
-develop algorithms to allow flexibility for automatic reflex testing in
-clinical chemistry. The goal is to fill the gap between hard-coded
-reflex testing and fully manual reflective testing using machine
-learning algorithms.
+analytical process [@srivastava2010].
+
+This research study will focus specifically on reflex testing, those
+tests added automatically by a set of rules established in each
+laboratory. In most current clinical laboratories, reflex testing is
+performed with a 'hard' cutoff, using a specifically established range
+with no means of flexibility [@murphy2021]. This study will examine the
+use of Machine learning to develop algorithms to allow flexibility for
+automatic reflex testing in clinical chemistry. The goal is to fill the
+gap between hard-coded reflex testing and fully manual reflective
+testing using machine learning algorithms.
 
 ## Purpose and Research Statement
 
 Develop and test a machine learning algorithm to establish if said
-algorithm can perform better then current hard coded rules to reduced
+algorithm can perform better than current hard-coded rules to reduce
 unnecessary patient testing.
 
 ## Significance
