@@ -1,5 +1,3 @@
-
-
 rm(list = ls(all.names = TRUE)) # Clear the memory of variables from previous run.
 cat("\014") # Clear the console
 
@@ -41,9 +39,12 @@ test_list_names <- c(
 # load data ---------------------------------------------------------------
 
 ds_high_tsh_raw <-   readr$read_rds(
-    here("ML","data-unshared","ds_high_tsh.RDS")
+  here("ML","data-unshared","ds_high_tsh.RDS")
   )
 
+ds_low_tsh_raw <- readr$read_rds(
+  here("ML","data-unshared","ds_low_tsh.RDS")
+  )
 
 
 # data manipulation -------------------------------------------------------
@@ -60,22 +61,48 @@ ds_high_tsh <- ds_high_tsh_raw %>%
   dplyr$select(-FT4)
 
 
+ds_low_tsh <- ds_low_tsh_raw %>%
+  dplyr$mutate(ft4_dia = dplyr$if_else(`50995` > 1.7, 1, 0)) %>%
+  #can rename with a vector using either of these
+  # dplyr$rename_with(~names(test_list_names), dplyr$all_of(test_list_names))
+  dplyr$rename(!!!test_list_names) %>%
+  dplyr$select(-FT4)
+
 
 # basic visualization -----------------------------------------------------
 
-#graph of missing tests
-g_count <- dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
-  tibble::rownames_to_column() %>%
-  ggplot(aes(x = rowname, y = value)) +
-  gp2$geom_col() +
-  gp2$theme(
-    axis.text.x = gp2$element_text(angle = 90)
-  )
-g_count
+#graph and table of missing tests
 
-#table of missing tests
-dplyr$as_tibble(colSums(is.na(ds_high_tsh)), rownames = NA ) %>%
-  tibble::rownames_to_column() %>% knitr::kable()
+missing_count <- function(ds){
+
+  df <- dplyr$as_tibble(colSums(is.na(ds)), rownames = NA ) %>%
+    tibble::rownames_to_column()
+
+  graph <- df %>%
+    ggplot(aes(x = rowname, y = value)) +
+    gp2$geom_col() +
+    gp2$theme(
+      axis.text.x = gp2$element_text(angle = 90)
+    )
+
+  return(
+    list(
+      df = df
+      ,graph = graph
+      )
+    )
+
+}
+
+high_missing <- missing_count(ds_high_tsh)
+low_missing <- missing_count(ds_low_tsh)
+
+missing_table <- high_missing$df %>%
+  dplyr$left_join(low_missing$df, by = "rowname")
+
+
+
+
 
 # count of diagnostics ft4 and freq
 t1 <- ds_high_tsh %>%
