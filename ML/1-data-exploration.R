@@ -69,6 +69,7 @@ ds_low_tsh <- ds_low_tsh_raw %>%
   dplyr$select(-FT4)
 
 
+
 # basic visualization -----------------------------------------------------
 
 #graph and table of missing tests
@@ -100,8 +101,8 @@ low_missing <- missing_count(ds_low_tsh)
 missing_table <- high_missing$df %>%
   dplyr$left_join(low_missing$df, by = "rowname")
 
-
-
+#use this instead of making myself
+ds_high_tsh %>% gtsummary::tbl_summary(by = ft4_dia)
 
 
 # count of diagnostics ft4 and freq
