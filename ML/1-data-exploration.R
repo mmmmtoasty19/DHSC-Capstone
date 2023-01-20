@@ -119,10 +119,6 @@ merged_summary_table <- gtsummary$tbl_merge(
   gtsummary$as_flex_table()
 
 
-
-
-
-
 # correlation plot
 ds_corr <- cor(ds_high_tsh %>%
                  dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2)))
