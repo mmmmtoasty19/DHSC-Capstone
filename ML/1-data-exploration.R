@@ -81,16 +81,21 @@ high_table_summary <- ds_high_tsh %>%
   gtsummary$tbl_summary(
     by = ft4_dia
     ,missing = "no"
+    ,type = gtsummary$all_continuous() ~ "continuous2"
     ,label = list(
       gender ~ "Gender"
       ,anchor_age ~ "Age"
       )
-    ,statistic = list(
-      gtsummary$all_continuous() ~ "{median} ({min}-{max})
-      /n Missing: {N_miss} "
-      )
+    ,statistic = gtsummary$all_continuous() ~ c(
+      "{N_miss}",
+      "{median} ({p25}, {p75})",
+      "{min}, {max}"
+    )
     ) %>%
-  gtsummary$add_p() %>%
+  gtsummary$bold_labels() %>%
+  gtsummary$add_stat_label(
+    label = gtsummary$all_continuous() ~ c("Missing", "Median (IQR)", "Range")
+    ) %>%
   gtsummary$modify_header(label = "**Variable**") %>%
   gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Diagnostic**")
 
