@@ -77,34 +77,55 @@ ds_low_tsh <- ds_low_tsh_raw %>%
 
 #summary Table
 #use this instead of making myself
-high_table_summary <- ds_high_tsh %>%
-  gtsummary$tbl_summary(
-    by = ft4_dia
-    ,missing = "no"
-    ,type = gtsummary$all_continuous() ~ "continuous2"
-    ,label = list(
-      gender ~ "Gender"
-      ,anchor_age ~ "Age"
-      )
-    ,statistic = gtsummary$all_continuous() ~ c(
-      "{N_miss}",
-      "{median} ({p25}, {p75})",
-      "{min}, {max}"
-    )
-    ) %>%
-  gtsummary$bold_labels() %>%
-  gtsummary$add_stat_label(
-    label = gtsummary$all_continuous() ~ c("Missing", "Median (IQR)", "Range")
-    ) %>%
-  gtsummary$modify_header(label = "**Variable**") %>%
-  gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Diagnostic**")
+summary_table <- function(ds){
+  table <- ds %>%
+    gtsummary$tbl_summary(
+      by = ft4_dia
+      ,missing = "no"
+      ,type = gtsummary$all_continuous() ~ "continuous2"
+      ,label = list(
+        gender ~ "Gender"
+        ,anchor_age ~ "Age"
+        )
+      ,statistic = gtsummary$all_continuous() ~ c(
+        "{N_miss}"
+        ,"{median} ({p25}, {p75})"
+        ,"{min}, {max}"
+        )
+      ) %>%
+    gtsummary$bold_labels() %>%
+    gtsummary$add_stat_label(
+      label = gtsummary$all_continuous() ~ c("Missing", "Median (IQR)", "Range")
+        ) %>%
+    gtsummary$modify_header(label = "**Variable**") %>%
+    gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Diagnostic**")
 
-high_table_summary
+  return(table)
+
+  }
+
+# create both tables
+high_table_summary <- summary_table(ds_high_tsh)
+low_table_summary <- summary_table(ds_low_tsh)
+
+# merge tables
+merged_summary_table <- gtsummary$tbl_merge(
+  tbls = list(high_table_summary, low_table_summary)
+  ,tab_spanner = c(
+    "**Elevated TSH** \n Free T4 Diagnostic"
+    ,"**Decreased TSH** \n Free T4 Diagnostic"
+    )
+  ) %>%
+  gtsummary$as_flex_table()
+
+
+
+
 
 
 # correlation plot
-ds_corr <- cor(ds_high_tsh %>% dplyr$select(-subject_id, - charttime)
-               %>% dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2)))
+ds_corr <- cor(ds_high_tsh %>%
+                 dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2)))
                ,use = "complete.obs")
 
 
@@ -116,7 +137,6 @@ dev.off()
 
 #quick recode of gender, will still do recoding during feature engineering
 g1 <- ds_high_tsh %>%
-  dplyr$select(-subject_id, - charttime) %>%
   dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2))) %>%
   tidyr$pivot_longer(cols = dplyr$everything()) %>%
   ggplot(aes(x = value)) +
@@ -127,7 +147,7 @@ g1
 
 # this takes a bit to load.  No discernable paterns in the data
 g2 <- ds_high_tsh %>%
-  dplyr$select(-gender, -subject_id, - charttime) %>%
+  dplyr$select(-gender) %>%
   tidyr$pivot_longer(cols = !ft4_dia) %>%
   ggplot(aes(x = factor(ft4_dia), y = value, fill = factor(ft4_dia))) +
   gp2$geom_boxplot(outlier.shape = NA, na.rm = TRUE) +
