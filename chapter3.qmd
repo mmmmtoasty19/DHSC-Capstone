@@ -19,3 +19,18 @@ coded rules in place today. The study will primarily focus on TSH reflex
 testing as this is the most common reflex test used in most
 laboratories. The hypothesis however is that this model could be used
 for many different types of reflex testing in the lab.
+
+```{r}
+#| include: false
+source(here::here("ML","1-data-exploration.R"))
+```
+
+```{r}
+#| label: tbl-data_summary
+#| tbl-cap: Data Summary Table
+#| echo: false
+
+
+merged_summary_table
+
+```
