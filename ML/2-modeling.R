@@ -7,10 +7,37 @@ cat("\014") # Clear the console
 box::use(
   magrittr[`%>%`]
   ,here[here]
-  ,dplyr
   ,readr
-  ,tidyr
   ,gp2 = ggplot2[ggplot, aes]
-  ,gtsummary
+  ,rsample
 )
+
+
+
+# globals -----------------------------------------------------------------
+
+set.seed(070823) #set seed for reproducible research
+
+
+# load-data ---------------------------------------------------------------
+
+model_data <- readr$read_rds(here("ML","data-unshared","model_data.RDS"))
+
+
+
+
+# split data --------------------------------------------------------------
+
+model_data_split <- rsample$initial_split(
+  model_data
+  ,prop   = 0.80
+  ,strata = ft4_dia
+  )
+
+ds_train <- rsample$training(model_data_split)
+ds_test  <- rsample$testing(model_data_split)
+
+# verify distribution of data
+table(ds_train$ft4_dia) %>% prop.table()
+table(ds_test$ft4_dia) %>% prop.table()
 
