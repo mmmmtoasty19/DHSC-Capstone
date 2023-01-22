@@ -116,25 +116,35 @@ g1 <- ds1 %>%
 # this takes a bit to load.  No discernable paterns in the data
 g2 <- ds_recode %>%
   dplyr$select(-gender) %>%
+  dplyr$mutate(dplyr$across(-ft4_dia, log)) %>%
   tidyr$pivot_longer(cols = !ft4_dia) %>%
   ggplot(aes(x = factor(ft4_dia), y = value, fill = factor(ft4_dia))) +
-  gp2$geom_boxplot(outlier.shape = NA, na.rm = TRUE) +
-  gp2$geom_jitter(size=.7, width=.1, alpha=.5, na.rm = TRUE) +
+  gp2$stat_boxplot(geom = "errorbar", na.rm = TRUE) +
+  gp2$geom_boxplot(na.rm = TRUE, outlier.shape = NA) +
   gp2$facet_wrap(~name, scales = "free") +
   gp2$theme_bw() +
   gp2$scale_fill_brewer(
     palette = "Greys"
-    ,labels = c("Hypo","Non-Hypo","Normal TSH","Hyper","Non-Hyper")
-    ) +
+    ,labels = c("1 - Hypo","2 - Non-Hypo","3 - Normal TSH","4 - Hyper","5 - Non-Hyper")
+  ) +
   gp2$labs(
     x = NULL
     ,y = NULL
     ,fill = "Lab Diagnosis"
+    ,caption = "All values log transformed"
   )
 
 # g2
+gp2$ggsave(
+  here("figures","boxplot.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
+  )
 
-gp2$ggsave(here("figures","boxplot.png"), width = 7, height = 7, dpi = 300)
+
+
 
 
 
