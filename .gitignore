@@ -56,4 +56,11 @@ _book/
 
 # Do not share data
 /ML/data-unshared
+
+
+# do not share images.  Need to be created on each computer
+/figures/
+
 ML/praticeML.R
+
+
