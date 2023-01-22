@@ -109,7 +109,8 @@ g1 <- ds1 %>%
     x = NULL
     ,y = NULL
   )
-g1
+
+# g1
 
 
 # this takes a bit to load.  No discernable paterns in the data
@@ -121,9 +122,19 @@ g2 <- ds_recode %>%
   gp2$geom_jitter(size=.7, width=.1, alpha=.5, na.rm = TRUE) +
   gp2$facet_wrap(~name, scales = "free") +
   gp2$theme_bw() +
-  gp2$scale_fill_brewer(palette = "Greys")
+  gp2$scale_fill_brewer(
+    palette = "Greys"
+    ,labels = c("Hypo","Non-Hypo","Normal TSH","Hyper","Non-Hyper")
+    ) +
+  gp2$labs(
+    x = NULL
+    ,y = NULL
+    ,fill = "Lab Diagnosis"
+  )
 
-g2
+# g2
+
+gp2$ggsave(here("figures","boxplot.png"), width = 7, height = 7, dpi = 300)
 
 
 
