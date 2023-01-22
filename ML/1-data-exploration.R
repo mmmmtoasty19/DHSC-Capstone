@@ -38,6 +38,24 @@ ds1 <- ds0 %>%
     )
   )
 
+ds_recode <- ds1 %>%
+  dplyr$mutate(
+    dplyr$across(
+      gender
+      ,~dplyr$recode(.,"M" = 1, "F" = 2)
+    )
+    ,dplyr$across(
+      ft4_dia
+      ,~dplyr$recode(.
+                     ,"Hypo"       = 1
+                     ,"Non-Hypo"   = 2
+                     ,"Normal TSH" = 3
+                     ,"Hyper"      = 4
+                     ,"Non-Hyper"  = 5
+      )
+    )
+  )
+
 
 # basic visualization -----------------------------------------------------
 
@@ -70,37 +88,42 @@ summary_tbl <- ds1 %>%
 
 
 # correlation plot
-ds_corr <- cor(ds_high_tsh %>%
-                 dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2)))
-               ,use = "complete.obs")
+ds_corr <- cor(ds_recode,use = "complete.obs")
 
 
 #code for saving corr plot
-png(here("figures","corrplot_high.png"), type = 'cairo')
+png(here("figures","corrplot.png"), type = 'cairo')
 corrplot::corrplot(ds_corr, method = "number")
 dev.off()
 
 
 #quick recode of gender, will still do recoding during feature engineering
-g1 <- ds_high_tsh %>%
-  dplyr$mutate(dplyr$across(gender, ~dplyr$recode(.,M = 1, F = 2))) %>%
+g1 <- ds1 %>%
+  dplyr$select(-gender, -ft4_dia) %>%
   tidyr$pivot_longer(cols = dplyr$everything()) %>%
   ggplot(aes(x = value)) +
   gp2$geom_histogram(na.rm = TRUE) +
-  gp2$facet_wrap(~name, scales = "free")
+  gp2$facet_wrap(~name, scales = "free") +
+  gp2$theme_bw() +
+  gp2$labs(
+    x = NULL
+    ,y = NULL
+  )
 g1
 
 
 # this takes a bit to load.  No discernable paterns in the data
-g2 <- ds_high_tsh %>%
+g2 <- ds_recode %>%
   dplyr$select(-gender) %>%
   tidyr$pivot_longer(cols = !ft4_dia) %>%
   ggplot(aes(x = factor(ft4_dia), y = value, fill = factor(ft4_dia))) +
   gp2$geom_boxplot(outlier.shape = NA, na.rm = TRUE) +
   gp2$geom_jitter(size=.7, width=.1, alpha=.5, na.rm = TRUE) +
-  gp2$facet_wrap(~name, scales = "free")
-g2
+  gp2$facet_wrap(~name, scales = "free") +
+  gp2$theme_bw() +
+  gp2$scale_fill_brewer(palette = "Greys")
 
+g2
 
 
 
