@@ -72,13 +72,6 @@ patients <- dplyr$tbl(db, "patients") %>%
   dplyr$select(-anchor_year, -anchor_year_group, -dod) %>%
   dplyr$collect()
 
-admissions <- dplyr$tbl(db, "admissions") %>%
-  dplyr$select(subject_id, race, hadm_id) %>%
-  dplyr$collect()
-
-
-admissions <- admissions %>% dplyr$mutate(dplyr$across(race, factor))
-
 # usable data set is using chart time as it appears
 # LIS uses different id's for groups of tests
 # BMP and CBC Results together
@@ -98,7 +91,7 @@ ds1 <- ds_bmp %>%
   dplyr$filter(!is.na(`50993`) & !is.na(`50995`)) %>%
   dplyr$left_join(patients, by = c("subject_id" = "subject_id")) %>%
   dplyr$mutate(dplyr$across(`51300`, ~dplyr$if_else(!is.na(.),`51300`,`51301`))) %>%
-  dplyr$select(-`51301`) %>%
+  dplyr$select(-`51301`, -hadm_id) %>%
   # dplyr$filter(dplyr$if_all(.fns = ~!is.na(.)))
   dplyr$filter(rowSums(is.na(.)) <= 3)  #allows for 3 missing test
 
