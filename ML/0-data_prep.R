@@ -72,6 +72,13 @@ patients <- dplyr$tbl(db, "patients") %>%
   dplyr$select(-anchor_year, -anchor_year_group, -dod) %>%
   dplyr$collect()
 
+admissions <- dplyr$tbl(db, "admissions") %>%
+  dplyr$select(subject_id, race, hadm_id) %>%
+  dplyr$collect()
+
+
+admissions <- admissions %>% dplyr$mutate(dplyr$across(race, factor))
+
 # usable data set is using chart time as it appears
 # LIS uses different id's for groups of tests
 # BMP and CBC Results together
