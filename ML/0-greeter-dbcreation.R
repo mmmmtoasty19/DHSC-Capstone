@@ -39,7 +39,7 @@ readr$read_csv_chunked(
     dbWriteTable(mimicDB, "labevents", chunk, append = TRUE)
     }
   ,chunk_size = 10000
-  ,col_types = "_d_dd_TT_d______"
+  ,col_types = "_dddd_TT_d______"
   )
 
 
@@ -56,6 +56,13 @@ readr$read_csv(
   here("ML","data-unshared","d_labitems.csv")
 ) %>%
   dbWriteTable(mimicDB,"labitems", .)
+
+readr$read_csv(
+  here("ML","data-unshared","admissions.csv")
+) %>%
+  dbWriteTable(mimicDB,"admissions", .)
+
+
 
 
 # close database ----------------------------------------------------------
