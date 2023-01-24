@@ -30,7 +30,6 @@ ds0 <- readr$read_rds(here("ML","data-unshared","ds_final.RDS"))
 
 
 ds1 <- ds0 %>%
-  dplyr$select(-subject_id, -charttime) %>%
   dplyr$mutate(dplyr$across(
     ft4_dia
     , ~factor(., levels = c("Hypo", "Non-Hypo","Hyper", "Non-Hyper")
@@ -61,6 +60,7 @@ ds_recode <- ds1 %>%
 #summary Table
 
 summary_tbl <- ds1 %>%
+  dplyr$select(-subject_id, -charttime) %>%
   gtsummary$tbl_summary(
     by = ft4_dia
     ,missing = "no"
@@ -88,7 +88,7 @@ summary_tbl <- ds1 %>%
 
 # correlation plot
 corr_plot <- cor(
-  ds1 %>% dplyr$select(-gender,-ft4_dia)
+  ds1 %>% dplyr$select(-gender,-ft4_dia, -subject_id, -charttime)
   ,use = "complete.obs"
   ) %>%
   corrplot::corrplot(method = "number", type = "lower", tl.col = "black", tl.srt = 45
@@ -105,7 +105,7 @@ dev.off()
 
 #quick recode of gender, will still do recoding during feature engineering
 g1 <- ds1 %>%
-  dplyr$select(-gender, -ft4_dia) %>%
+  dplyr$select(-gender,-ft4_dia, -subject_id, -charttime) %>%
   tidyr$pivot_longer(cols = dplyr$everything()) %>%
   ggplot(aes(x = value)) +
   gp2$geom_histogram(na.rm = TRUE) +
@@ -128,7 +128,7 @@ gp2$ggsave(
 
 # this takes a bit to load.  No discernible patterns in the data
 g2 <- ds_recode %>%
-  dplyr$select(-gender) %>%
+  dplyr$select(-gender, -subject_id, -charttime) %>%
   dplyr$mutate(dplyr$across(-ft4_dia, log)) %>%
   tidyr$pivot_longer(cols = !ft4_dia) %>%
   ggplot(aes(x = factor(ft4_dia), y = value, fill = factor(ft4_dia))) +
