@@ -85,21 +85,14 @@ summary_tbl <- ds1 %>%
 # summary_tbl
 
 
-
-# correlation plot
+#code for saving corr plot
+devEMF::emf(here("figures","corrplot.emf"))
 corr_plot <- cor(
   ds1 %>% dplyr$select(-gender,-ft4_dia, -subject_id, -charttime)
   ,use = "complete.obs"
-  ) %>%
-  corrplot::corrplot(method = "number", type = "lower", tl.col = "black", tl.srt = 45
-                     ,col = corrplot::COL1("Greys"))
-
-# pick color blind friendly pallete
-
-
-#code for saving corr plot
-devEMF::emf(here("figures","corrplot.emf"))
-corrplot::corrplot(ds_corr, method = "number")
+) %>%
+  corrplot::corrplot(method = "color", type = "lower", tl.col = "black", tl.srt = 45
+                     ,col = corrplot::COL1("Greys"), addCoef.col = 'white')
 dev.off()
 
 
