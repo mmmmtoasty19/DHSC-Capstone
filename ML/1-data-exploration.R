@@ -30,10 +30,10 @@ ds0 <- readr$read_rds(here("ML","data-unshared","ds_final.RDS"))
 
 
 ds1 <- ds0 %>%
-  dplyr$select(-FT4, -subject_id, -charttime) %>%
+  dplyr$select(-subject_id, -charttime) %>%
   dplyr$mutate(dplyr$across(
     ft4_dia
-    , ~factor(., levels = c("Hypo", "Non-Hypo", "Normal TSH", "Hyper", "Non-Hyper")
+    , ~factor(., levels = c("Hypo", "Non-Hypo","Hyper", "Non-Hyper")
               )
     )
   )
@@ -49,9 +49,8 @@ ds_recode <- ds1 %>%
       ,~dplyr$recode(.
                      ,"Hypo"       = 1
                      ,"Non-Hypo"   = 2
-                     ,"Normal TSH" = 3
-                     ,"Hyper"      = 4
-                     ,"Non-Hyper"  = 5
+                     ,"Hyper"      = 3
+                     ,"Non-Hyper"  = 4
       )
     )
   )
@@ -88,11 +87,18 @@ summary_tbl <- ds1 %>%
 
 
 # correlation plot
-ds_corr <- cor(ds_recode,use = "complete.obs")
+corr_plot <- cor(
+  ds1 %>% dplyr$select(-gender,-ft4_dia)
+  ,use = "complete.obs"
+  ) %>%
+  corrplot::corrplot(method = "number", type = "lower", tl.col = "black", tl.srt = 45
+                     ,col = corrplot::COL1("Greys"))
+
+# pick color blind friendly pallete
 
 
 #code for saving corr plot
-png(here("figures","corrplot.png"), type = 'cairo')
+devEMF::emf(here("figures","corrplot.emf"))
 corrplot::corrplot(ds_corr, method = "number")
 dev.off()
 
@@ -112,8 +118,15 @@ g1 <- ds1 %>%
 
 # g1
 
+gp2$ggsave(
+  here("figures","distrubution_histo.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
+)
 
-# this takes a bit to load.  No discernable paterns in the data
+# this takes a bit to load.  No discernible patterns in the data
 g2 <- ds_recode %>%
   dplyr$select(-gender) %>%
   dplyr$mutate(dplyr$across(-ft4_dia, log)) %>%
@@ -125,13 +138,16 @@ g2 <- ds_recode %>%
   gp2$theme_bw() +
   gp2$scale_fill_brewer(
     palette = "Greys"
-    ,labels = c("1 - Hypo","2 - Non-Hypo","3 - Normal TSH","4 - Hyper","5 - Non-Hyper")
+    ,labels = c("1 - Hypo","2 - Non-Hypo","3 - Hyper","4 - Non-Hyper")
   ) +
   gp2$labs(
     x = NULL
     ,y = NULL
     ,fill = "Lab Diagnosis"
-    ,caption = "All values log transformed"
+    ,caption = "Note. All values log transformed"
+  ) +
+  gp2$theme(
+    plot.caption = gp2$element_text(hjust = 0)
   )
 
 # g2
