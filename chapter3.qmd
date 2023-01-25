@@ -4,6 +4,34 @@ need brief description and IRB statement
 
 ## Population and Data
 
-This study was designed using the Medical Information Mart for Intensive Care (MIMIC) database [@johnsonalistair]. MIMIC (Medical Information Mart for Intensive Care) is an extensive, freely-available database comprising de-identified health-related data from patients who were admitted to the critical care units of the Beth Israel Deaconess Medical Center. The study uses version IV of the database, containing data from 2008 - 2019. The database contains many different types of information, but only data from the patients and laboratory events table are used in this study.
+This study was designed using the Medical Information Mart for Intensive
+Care (MIMIC) database [@johnsonalistair]. MIMIC (Medical Information
+Mart for Intensive Care) is an extensive, freely-available database
+comprising de-identified health-related data from patients who were
+admitted to the critical care units of the Beth Israel Deaconess Medical
+Center. The study uses version IV of the database, containing data from
+2008 - 2019. The database contains many different types of information,
+but only data from the patients and laboratory events table are used in
+this study.
 
 ## Data Variables and Outcomes
+
+A total of 18 variables were chosen for this study. The age and gender
+of the patient were pulled from the patient table in the MIMIC database.
+While this database contains some additional demographic information, it
+is incomplete and thus unusable for this study. 16 lab values were
+selected for this study, this includes:
+
+-   **BMP**: BUN, bicarbonate, calcium, chloride, creatinine, glucose,
+    potassium, sodium
+
+-   **CBC**: Hematocrit, hemoglobin, platelet count, red blood cell
+    count, white blood cell count
+
+-   TSH
+
+-   Free T4
+
+## Data Transformations
+
+In progress
