@@ -70,20 +70,19 @@ summary_tbl <- ds1 %>%
       ,anchor_age ~ "Age"
       )
     ,statistic = gtsummary$all_continuous() ~ c(
-      "{N_miss}"
+      "{p_miss}"
       ,"{median} ({p25}, {p75})"
       ,"{min}, {max}"
       )
     ) %>%
-  gtsummary$bold_labels() %>%
+  # gtsummary$bold_labels() %>%
   gtsummary$add_stat_label(
-    label = gtsummary$all_continuous() ~ c("Missing", "Median (IQR)", "Range")
+    label = gtsummary$all_continuous() ~ c("% Missing", "Median (IQR)", "Range")
   ) %>%
   gtsummary$modify_header(label = "**Variable**") %>%
-  gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Diagnostic**")
+  gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Outcome**")
 
 # summary_tbl
-
 
 #code for saving corr plot
 devEMF::emf(here("figures","corrplot.emf"))
