@@ -82,18 +82,42 @@ summary_tbl <- ds1 %>%
   gtsummary$modify_header(label = "**Variable**") %>%
   gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Outcome**")
 
+
+summary_tbl <- ds1 %>%
+  dplyr$select(-subject_id, -charttime) %>%
+  gtsummary$tbl_summary(
+    by = ft4_dia
+    ,missing = "no"
+    ,type = gtsummary$all_continuous() ~ "continuous"
+    ,label = list(
+      gender ~ "Gender"
+      ,anchor_age ~ "Age"
+    )
+    ,statistic = gtsummary$all_continuous() ~ c("{p_miss}{median}"    )
+  ) %>%
+  # gtsummary$bold_labels() %>%
+  gtsummary$modify_header(label = "**Variable**") %>%
+  gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Outcome**") %>%
+
+
 # summary_tbl
 
 #code for saving corr plot
 devEMF::emf(here("figures","corrplot.emf"))
-corr_plot <- cor(
+corr_data <- cor(
   ds1 %>% dplyr$select(-gender,-ft4_dia, -subject_id, -charttime)
   ,use = "complete.obs"
-) %>%
-  corrplot::corrplot(method = "color", type = "lower", tl.col = "black", tl.srt = 45
-                     ,col = corrplot::COL1("Greys"), addCoef.col = 'white')
+)
+corrplot::corrplot(corr = corr_data,
+                   method = "color"
+                   ,type = "lower"
+                   ,tl.col = "black"
+                   ,tl.srt = 45
+                   ,number.font =
+                   ,col = corrplot::COL1("Greys")
+                   ,addCoef.col = 'white'
+                     )
 dev.off()
-
 
 #quick recode of gender, will still do recoding during feature engineering
 g1 <- ds1 %>%
