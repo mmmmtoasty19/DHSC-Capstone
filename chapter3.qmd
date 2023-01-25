@@ -27,16 +27,28 @@ A total of 18 variables were chosen for this study. The age and gender of the pa
 
 The unique patient id and chart time were also retained for identifying each sample. Each sample contains one set of 16 lab values for each patient. Patients may have several samples in the data set that were run at different times. Rows were retained as long as they had less than three missing results. These missing results can be filled in by imputation later in the process. Samples were also filtered for those with TSH above or below the reference range of 0.27 - 4.2 uIU/mL. These represent samples that would have reflexed for Free T4 testing. After filtering, the final data set contained `r nrow(ds1)` rows.
 
-Once the final data set was collected, an additional column was created for the outcome variable to determine if the Free T4 value was diagnostic. After adding the outcome variable, the Free T4 value was dropped from each row. @tbl-outcome_var shows how the outcomes were added.
+Once the final data set was collected, an additional column was created for the outcome variable to determine if the Free T4 value was diagnostic. After adding the outcome variable, the Free T4 value was dropped from each row. @tbl-outcome_var shows how the outcomes were added. @tbl-data_summary shows the summary statistics of each variable selected for the study.
 
-| TSH Value     | Free T4 Value | Outcome              |
-|---------------|---------------|----------------------|
-| \>4.2 uIU/ml  | \>0.93 ng/dL  | Non-Hypothyroidism   |
-| \>4.2 uIU/ml  | \<0.93 ng/dL  | Hypothyroidism       |
-| \<0.27 uIU/ml | \<1.7 ng/d    | Non-Hyperthyroidism  |
-| \<0.27 uIU/ml | \>1.7 ng/d    | Hyperthyroidism      |
+| TSH Value     | Free T4 Value | Outcome             |
+|---------------|---------------|---------------------|
+| \>4.2 uIU/ml  | \>0.93 ng/dL  | Non-Hypothyroidism  |
+| \>4.2 uIU/ml  | \<0.93 ng/dL  | Hypothyroidism      |
+| \<0.27 uIU/ml | \<1.7 ng/d    | Non-Hyperthyroidism |
+| \<0.27 uIU/ml | \>1.7 ng/d    | Hyperthyroidism     |
 
 : Outcome Variable {#tbl-outcome_var}
+
+```{r}
+#| label: tbl-data_summary
+#| tbl-cap: Data Summary
+#| echo: false
+
+summary_tbl %>% gtsummary$as_flex_table()
+```
+
+## Data Inspection
+
+![](figures/corrplot.emf)
 
 ## Data Transformations
 
