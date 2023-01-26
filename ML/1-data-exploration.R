@@ -12,6 +12,7 @@ box::use(
   ,tidyr
   ,gp2 = ggplot2[ggplot, aes]
   ,gtsummary
+  ,GGally
 )
 
 
@@ -64,60 +65,43 @@ summary_tbl <- ds1 %>%
   gtsummary$tbl_summary(
     by = ft4_dia
     ,missing = "no"
-    ,type = gtsummary$all_continuous() ~ "continuous2"
-    ,label = list(
-      gender ~ "Gender"
-      ,anchor_age ~ "Age"
-      )
-    ,statistic = gtsummary$all_continuous() ~ c(
-      "{p_miss}"
-      ,"{median} ({p25}, {p75})"
-      ,"{min}, {max}"
-      )
-    ) %>%
-  # gtsummary$bold_labels() %>%
-  gtsummary$add_stat_label(
-    label = gtsummary$all_continuous() ~ c("% Missing", "Median (IQR)", "Range")
-  ) %>%
-  gtsummary$modify_header(label = "**Variable**") %>%
-  gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Outcome**")
-
-
-summary_tbl <- ds1 %>%
-  dplyr$select(-subject_id, -charttime) %>%
-  gtsummary$tbl_summary(
-    by = ft4_dia
-    ,missing = "no"
     ,type = gtsummary$all_continuous() ~ "continuous"
     ,label = list(
       gender ~ "Gender"
       ,anchor_age ~ "Age"
     )
-    ,statistic = gtsummary$all_continuous() ~ c("{p_miss}{median}"    )
+    ,statistic = gtsummary$all_continuous() ~ c("{median} ({p25}, {p75})")
   ) %>%
   # gtsummary$bold_labels() %>%
+  gtsummary$add_n(statistic = "{p_miss}", col_label = "**% Missing**") %>%
   gtsummary$modify_header(label = "**Variable**") %>%
-  gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Outcome**") %>%
+  gtsummary$modify_spanning_header(gtsummary$all_stat_cols() ~ "**Free T4 Outcome**")
 
 
 # summary_tbl
 
-#code for saving corr plot
-devEMF::emf(here("figures","corrplot.emf"))
-corr_data <- cor(
-  ds1 %>% dplyr$select(-gender,-ft4_dia, -subject_id, -charttime)
-  ,use = "complete.obs"
+
+# corr-plot ---------------------------------------------------------------
+
+corr_plot <- ds1 %>%
+  dplyr$select(-gender,-ft4_dia, -subject_id, -charttime) %>%
+  dplyr$rename(Age = anchor_age) %>%
+  GGally$ggcorr(nbreaks = 5, palette = "Greys"
+                ,label = TRUE, label_size = 3, label_color = "white"
+                  ,label_round = 2
+                ,hjust = 0.75
+                ,layout.exp = 1)
+
+# corr_plot
+
+gp2$ggsave(
+  here("figures","corr_plot.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
 )
-corrplot::corrplot(corr = corr_data,
-                   method = "color"
-                   ,type = "lower"
-                   ,tl.col = "black"
-                   ,tl.srt = 45
-                   ,number.font =
-                   ,col = corrplot::COL1("Greys")
-                   ,addCoef.col = 'white'
-                     )
-dev.off()
+
 
 #quick recode of gender, will still do recoding during feature engineering
 g1 <- ds1 %>%
