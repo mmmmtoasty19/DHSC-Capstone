@@ -19,13 +19,14 @@ csl: apa.csl
 format:
   html:
     theme: journal
+    default-image-extension: png
   docx:
     reference-doc: extras/custom-reference.docx
-    number-sections: false
+    number-sections: true
+    number-depth: 1
+    default-image-extension: emf
 
 
 editor: visual
 
-exectue:
-  freeze: auto
 

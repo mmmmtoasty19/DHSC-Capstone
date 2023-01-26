@@ -77,10 +77,15 @@ summary_tbl %>% gtsummary$as_kable()
 
 ## Data Inspection
 
-![](figures/corrplot.emf)
+![Distribution of
+Variables](figures/distrubution_histo){#fig-distro_histo}
+
+![Variable Correlation Plot](figures/corr_plot){#fig-corr_plot}
 
 ## Data Transformations
 
 In progress
 
 ## Model Selection
+
+In Progress
