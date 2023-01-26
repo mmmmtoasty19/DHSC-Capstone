@@ -19,7 +19,6 @@ box::use(
 # globals -----------------------------------------------------------------
 
 
-
 # load data ---------------------------------------------------------------
 
 ds0 <- readr$read_rds(here("ML","data-unshared","ds_final.RDS"))
@@ -101,6 +100,12 @@ gp2$ggsave(
   ,dpi    = 300
   ,device = devEMF::emf
 )
+gp2$ggsave(
+  here("figures","corr_plot.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+)
 
 
 #quick recode of gender, will still do recoding during feature engineering
@@ -124,6 +129,12 @@ gp2$ggsave(
   ,height = 7
   ,dpi    = 300
   ,device = devEMF::emf
+)
+gp2$ggsave(
+  here("figures","distrubution_histo.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
 )
 
 # this takes a bit to load.  No discernible patterns in the data
@@ -158,6 +169,12 @@ gp2$ggsave(
   ,dpi    = 300
   ,device = devEMF::emf
   )
+gp2$ggsave(
+  here("figures","boxplot.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+)
 
 
 # save-data ---------------------------------------------------------------
