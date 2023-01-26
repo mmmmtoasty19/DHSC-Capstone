@@ -11,6 +11,8 @@ book:
     - chapter2.qmd
     - chapter3.qmd
     - references.qmd
+  abstract: "This is a test to see what happens with this"
+
 
 
 bibliography: references.bib
