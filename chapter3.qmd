@@ -4,7 +4,17 @@ need brief description and IRB statement
 
 ## Population and Data
 
-This study was designed using the Medical Information Mart for Intensive Care (MIMIC) database [@johnsonalistair]. MIMIC (Medical Information Mart for Intensive Care) is an extensive, freely-available database comprising de-identified health-related data from patients who were admitted to the critical care units of the Beth Israel Deaconess Medical Center. The database contains many different types of information, but only data from the patients and laboratory events table are used in this study. The database contains many kinds of information, but only data from the patients and laboratory events table are used in this study. The study uses version IV of the database, comprising data from 2008 - 2019.
+This study was designed using the Medical Information Mart for Intensive
+Care (MIMIC) database [@johnsonalistair]. MIMIC (Medical Information
+Mart for Intensive Care) is an extensive, freely-available database
+comprising de-identified health-related data from patients who were
+admitted to the critical care units of the Beth Israel Deaconess Medical
+Center. The database contains many different types of information, but
+only data from the patients and laboratory events table are used in this
+study. The database contains many kinds of information, but only data
+from the patients and laboratory events table are used in this study.
+The study uses version IV of the database, comprising data from 2008 -
+2019.
 
 ## Data Variables and Outcomes
 
@@ -15,19 +25,38 @@ source(here::here("ML","1-data-exploration.R"))
 
 ```
 
-A total of 18 variables were chosen for this study. The age and gender of the patient were pulled from the patient table in the MIMIC database. While this database contains some additional demographic information, it is incomplete and thus unusable for this study. 16 lab values were selected for this study, this includes:
+A total of 18 variables were chosen for this study. The age and gender
+of the patient were pulled from the patient table in the MIMIC database.
+While this database contains some additional demographic information, it
+is incomplete and thus unusable for this study. 16 lab values were
+selected for this study, this includes:
 
--   **BMP**: BUN, bicarbonate, calcium, chloride, creatinine, glucose, potassium, sodium
+-   **BMP**: BUN, bicarbonate, calcium, chloride, creatinine, glucose,
+    potassium, sodium
 
--   **CBC**: Hematocrit, hemoglobin, platelet count, red blood cell count, white blood cell count
+-   **CBC**: Hematocrit, hemoglobin, platelet count, red blood cell
+    count, white blood cell count
 
 -   TSH
 
 -   Free T4
 
-The unique patient id and chart time were also retained for identifying each sample. Each sample contains one set of 16 lab values for each patient. Patients may have several samples in the data set that were run at different times. Rows were retained as long as they had less than three missing results. These missing results can be filled in by imputation later in the process. Samples were also filtered for those with TSH above or below the reference range of 0.27 - 4.2 uIU/mL. These represent samples that would have reflexed for Free T4 testing. After filtering, the final data set contained `r nrow(ds1)` rows.
+The unique patient id and chart time were also retained for identifying
+each sample. Each sample contains one set of 16 lab values for each
+patient. Patients may have several samples in the data set that were run
+at different times. Rows were retained as long as they had less than
+three missing results. These missing results can be filled in by
+imputation later in the process. Samples were also filtered for those
+with TSH above or below the reference range of 0.27 - 4.2 uIU/mL. These
+represent samples that would have reflexed for Free T4 testing. After
+filtering, the final data set contained `r nrow(ds1)` rows.
 
-Once the final data set was collected, an additional column was created for the outcome variable to determine if the Free T4 value was diagnostic. After adding the outcome variable, the Free T4 value was dropped from each row. @tbl-outcome_var shows how the outcomes were added. @tbl-data_summary shows the summary statistics of each variable selected for the study.
+Once the final data set was collected, an additional column was created
+for the outcome variable to determine if the Free T4 value was
+diagnostic. After adding the outcome variable, the Free T4 value was
+dropped from each row. @tbl-outcome_var shows how the outcomes were
+added. @tbl-data_summary shows the summary statistics of each variable
+selected for the study.
 
 | TSH Value     | Free T4 Value | Outcome             |
 |---------------|---------------|---------------------|
@@ -43,7 +72,7 @@ Once the final data set was collected, an additional column was created for the 
 #| tbl-cap: Data Summary
 #| echo: false
 
-summary_tbl %>% gtsummary$as_flex_table()
+summary_tbl %>% gtsummary$as_kable()
 ```
 
 ## Data Inspection
