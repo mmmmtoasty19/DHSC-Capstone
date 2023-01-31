@@ -75,3 +75,10 @@ rf_predict <- ds_train %>%
 
 ys$accuracy(rf_predict, ft4_dia, .pred_class)
 ys$conf_mat(rf_predict, ft4_dia, .pred_class)
+
+ggplot2::autoplot(ys$roc_curve(rf_predict, ft4_dia, `.pred_Hypo`:`.pred_Non-Hyper`))
+
+ys$sensitivity(rf_predict,ft4_dia, .pred_class, estimator = "macro_weighted")
+ys$sensitivity(rf_predict,ft4_dia, .pred_class, estimator = "micro")
+ys$roc_auc(rf_predict, ft4_dia, `.pred_Hypo`, `.pred_Non-Hypo`, `.pred_Hyper`, `.pred_Non-Hyper`)
+
