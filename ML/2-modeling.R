@@ -10,6 +10,9 @@ box::use(
   ,readr
   ,gp2 = ggplot2[ggplot, aes]
   ,rsample
+  ,r = recipes
+  ,wf = workflows
+  ,p = parsnip
 )
 
 
@@ -41,3 +44,22 @@ ds_test  <- rsample$testing(model_data_split)
 table(ds_train$ft4_dia) %>% prop.table()
 table(ds_test$ft4_dia) %>% prop.table()
 
+
+
+# random forest -----------------------------------------------------------
+
+rf_model <- p$rand_forest(trees = 1900) %>%
+  p$set_engine("ranger") %>% p$set_mode("classification")
+
+rf_recipe <- r$recipe(ft4_dia ~ . , data = ds_train) %>%
+  r$update_role(subject_id, new_role = "id") %>%
+  r$update_role(charttime, new_role = "time") %>%
+  r$step_impute_knn(r$all_predictors())
+
+
+
+rf_workflow <- wf$workflow() %>%
+  wf$add_model(rf_model) %>%
+  wf$add_recipe(rf_recipe)
+
+rf_fit <- p$fit(rf_workflow, ds_train)
