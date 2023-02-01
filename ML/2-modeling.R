@@ -51,12 +51,13 @@ table(ds_test$ft4_dia) %>% prop.table()
 
 
 rf_model <- p$rand_forest(trees = 1900) %>%
-  p$set_engine("ranger") %>% p$set_mode("classification")
+  p$set_engine("ranger") %>% p$set_mode("regression")
 
-rf_recipe <- r$recipe(ft4_dia ~ . , data = ds_train) %>%
+rf_recipe <- r$recipe(FT4 ~ . , data = ds_train) %>%
   r$update_role(subject_id, new_role = "id") %>%
   r$update_role(charttime, new_role = "time") %>%
-  r$step_impute_bag(r$all_numeric())
+  r$update_role(ft4_dia, new_role = "class") %>%
+  r$step_impute_bag(r$all_predictors())
 
 
 
@@ -67,18 +68,15 @@ rf_workflow <- wf$workflow() %>%
 rf_fit <- p$fit(rf_workflow, ds_train)
 
 rf_predict <- ds_train %>%
-  dplyr::select(ft4_dia) %>%
-  dplyr::bind_cols(
-    predict(rf_fit, ds_train)
-    ,predict(rf_fit, ds_train, type = "prob")
-    )
+  dplyr::select(FT4) %>%
+  dplyr::bind_cols(predict(rf_fit, ds_train))
 
-ys$accuracy(rf_predict, ft4_dia, .pred_class)
-ys$conf_mat(rf_predict, ft4_dia, .pred_class)
 
-ggplot2::autoplot(ys$roc_curve(rf_predict, ft4_dia, `.pred_Hypo`:`.pred_Non-Hyper`))
+gp2$ggplot(rf_predict, gp2$aes(x = FT4, y = .pred)) +
+  gp2$geom_point()
 
-ys$sensitivity(rf_predict,ft4_dia, .pred_class, estimator = "macro_weighted")
-ys$sensitivity(rf_predict,ft4_dia, .pred_class, estimator = "micro")
-ys$roc_auc(rf_predict, ft4_dia, `.pred_Hypo`, `.pred_Non-Hypo`, `.pred_Hyper`, `.pred_Non-Hyper`)
+ys$rmse(rf_predict, FT4, .pred)
 
+metrics <- ys$metric_set(ys$rmse, ys$rsq, ys$mae)
+
+metrics(rf_predict, FT4, .pred)

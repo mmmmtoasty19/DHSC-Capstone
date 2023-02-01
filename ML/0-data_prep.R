@@ -107,7 +107,7 @@ ds_final <- ds1 %>%
   ) %>%
   dplyr$filter(ft4_dia != "Normal TSH") %>%
   dplyr$rename(!!!test_list_names) %>%
-  dplyr$select(-FT4) %>%
+  # dplyr$select(-FT4) %>%
   dplyr$relocate(gender, anchor_age)
 
 # save data ---------------------------------------------------------------

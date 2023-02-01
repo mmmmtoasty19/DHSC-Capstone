@@ -60,7 +60,7 @@ ds_recode <- ds1 %>%
 #summary Table
 
 summary_tbl <- ds1 %>%
-  dplyr$select(-subject_id, -charttime) %>%
+  dplyr$select(-subject_id, -charttime, -FT4) %>%
   gtsummary$tbl_summary(
     by = ft4_dia
     ,missing = "no"
@@ -83,7 +83,7 @@ summary_tbl <- ds1 %>%
 # corr-plot ---------------------------------------------------------------
 
 corr_plot <- ds1 %>%
-  dplyr$select(-gender,-ft4_dia, -subject_id, -charttime) %>%
+  dplyr$select(-gender,-ft4_dia, -subject_id, -charttime, -FT4) %>%
   dplyr$rename(Age = anchor_age) %>%
   GGally$ggcorr(nbreaks = 5, palette = "Greys"
                 ,label = TRUE, label_size = 3, label_color = "white"
@@ -110,7 +110,7 @@ gp2$ggsave(
 
 #quick recode of gender, will still do recoding during feature engineering
 g1 <- ds1 %>%
-  dplyr$select(-gender,-ft4_dia, -subject_id, -charttime) %>%
+  dplyr$select(-gender,-ft4_dia, -subject_id, -charttime, -FT4) %>%
   tidyr$pivot_longer(cols = dplyr$everything()) %>%
   ggplot(aes(x = value)) +
   gp2$geom_histogram(na.rm = TRUE) +
@@ -139,7 +139,7 @@ gp2$ggsave(
 
 # this takes a bit to load.  No discernible patterns in the data
 g2 <- ds_recode %>%
-  dplyr$select(-gender, -subject_id, -charttime) %>%
+  dplyr$select(-gender, -subject_id, -charttime, -FT4) %>%
   dplyr$mutate(dplyr$across(-ft4_dia, log)) %>%
   tidyr$pivot_longer(cols = !ft4_dia) %>%
   ggplot(aes(x = factor(ft4_dia), y = value, fill = factor(ft4_dia))) +
