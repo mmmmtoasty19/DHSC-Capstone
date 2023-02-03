@@ -92,9 +92,29 @@ data_fold <- rsamp$vfold_cv(class_train, v = 5)
 
 rf_workflow <- wf$update_model(rf_workflow, rf_tuning_model)
 
-rf_tune <- rf_workflow %>%
-    tune::tune_grid(
-    data_fold
-    ,grid = rf_param %>% d$grid_regular()
+# takes around 1 hr to run grid search.  saving best params manaually
+# rf_tune <- rf_workflow %>%
+#     tune::tune_grid(
+#     data_fold
+#     ,grid = rf_param %>% d$grid_regular()
+#   )
+
+rf_best_params <- tibble::tibble(
+  mtry = 8
+  ,trees = 2000
+  ,min_n = 2
+)
+
+final_rf_workflow <- rf_workflow %>%
+  tune::finalize_workflow(rf_best_params)
+
+final_rf_fit <- p$fit(final_rf_workflow, class_train)
+
+final_rf_predict <- class_train %>%
+  dplyr::select(ft4_dia) %>%
+  dplyr::bind_cols(
+    predict(final_rf_fit, class_train)
+    ,predict(final_rf_fit, class_train, type = "prob")
   )
 
+final_conf_rf <- ys$conf_mat(final_rf_predict, ft4_dia, .pred_class)
