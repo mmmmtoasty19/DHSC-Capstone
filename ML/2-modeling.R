@@ -118,3 +118,29 @@ final_rf_predict <- class_train %>%
   )
 
 final_conf_rf <- ys$conf_mat(final_rf_predict, ft4_dia, .pred_class)
+
+
+# random forest regression ------------------------------------------------
+
+reg_metrics <- ys$metric_set(ys$rmse, ys$rsq, ys$mae)
+
+rf_base_reg_model <- p$rand_forest() %>%
+  p$set_engine("ranger") %>% p$set_mode("regression")
+
+rf_reg_recipe <- r$recipe(FT4 ~ . , data = reg_train) %>%
+  r$update_role(subject_id, new_role = "id") %>%
+  r$update_role(charttime, new_role = "time") %>%
+  r$step_impute_bag(r$all_predictors())
+
+
+rf_reg_workflow <- wf$workflow() %>%
+  wf$add_model(rf_base_reg_model) %>%
+  wf$add_recipe(rf_reg_recipe)
+
+rf_base_reg_fit <- p$fit(rf_reg_workflow, reg_train)
+
+rf_reg_predict <- reg_train %>%
+  dplyr::select(FT4) %>%
+  dplyr::bind_cols(
+    predict(rf_base_reg_fit, reg_train)
+  )
