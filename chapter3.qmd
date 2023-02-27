@@ -62,14 +62,54 @@ When examining @fig-distro_histo, many clinical chemistry values do not show a s
 
 ## Data Tools
 
-All data handling and modeling were performed using R and R Studio. The current report was rendered in the following environment for documentation and reproducibility.
+All data handling and modeling were performed using R and R Studio. The current report was rendered in the following environment.
 
 ```{r}
-if( requireNamespace("devtools", quietly = TRUE) ) {
-  devtools::session_info()
-} else {
-  sessionInfo()
-}
+#| label: tbl-platform-info
+#| tbl-cap: Session Info R Environment
+#| echo: false
+#| #| message: false
+
+df_session_platform <-  devtools::session_info()$platform %>% 
+  unlist(.) %>% 
+  as.data.frame(.) %>% 
+  tibble::rownames_to_column(.)
+
+colnames(df_session_platform) <- c("Setting", "Value")
+
+knitr::kable(
+  df_session_platform
+  ,align = 'l'
+  ,booktabs = TRUE
+)
+
+```
+
+```{r}
+#| label: tbl-package-info
+#| tbl-cap: Package Info R Environment
+#| echo: false
+#| message: false
+
+
+df_session_packages <-  devtools::session_info(include_base = TRUE)$packages %>% 
+  as.data.frame(.) %>% 
+  dplyr::select(loadedversion, date) %>% 
+  tibble::rownames_to_column()
+
+colnames(df_session_packages) <- c("Package", "Loaded Version", "Date")
+
+used_packages <-renv::dependencies() %>% dplyr::select(2)
+
+df_session_packages <- df_session_packages %>% 
+  dplyr::filter(Package %in% used_packages$Package)
+
+knitr::kable(
+  df_session_packages
+  ,align = 'l'
+  ,booktabs = TRUE
+)
+
 ```
 
 ## Model Selection
