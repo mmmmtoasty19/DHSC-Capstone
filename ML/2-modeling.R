@@ -144,3 +144,25 @@ rf_reg_predict <- reg_train %>%
   dplyr::bind_cols(
     predict(rf_base_reg_fit, reg_train)
   )
+
+reg_metrics(rf_reg_predict, truth = FT4, estimate = .pred)
+
+rf_reg_tune_model <- p$rand_forest(trees = tune(), mtry = tune(), min_n = tune()) %>%
+  p$set_engine("ranger") %>% p$set_mode("regression")
+
+rf_reg_pred <- dplyr::select(reg_train, -FT4, -subject_id, -charttime)
+
+rf_reg_param <- p$extract_parameter_set_dials(rf_reg_tune_model) %>%
+  update(mtry = d$finalize(d$mtry(), rf_reg_pred))z
+
+data_fold_reg <- rsamp$vfold_cv(reg_train, v = 5)
+
+# takes around 1 hr to run grid search.  saving best params manaually
+rf_reg_tune <- rf_reg_workflow %>%
+    tune::tune_grid(
+    data_fold
+    ,grid = rf_reg_param %>% d$grid_regular()
+  )
+
+
+

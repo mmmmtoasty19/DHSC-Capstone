@@ -68,7 +68,8 @@ All data handling and modeling were performed using R and R Studio. The current 
 #| label: tbl-platform-info
 #| tbl-cap: Session Info R Environment
 #| echo: false
-#| #| message: false
+#| message: false
+#| #| warning: false
 
 df_session_platform <-  devtools::session_info()$platform %>% 
   unlist(.) %>% 
@@ -90,6 +91,7 @@ knitr::kable(
 #| tbl-cap: Package Info R Environment
 #| echo: false
 #| message: false
+#| warning: false
 
 
 df_session_packages <-  devtools::session_info(include_base = TRUE)$packages %>% 
@@ -99,7 +101,7 @@ df_session_packages <-  devtools::session_info(include_base = TRUE)$packages %>%
 
 colnames(df_session_packages) <- c("Package", "Loaded Version", "Date")
 
-used_packages <-renv::dependencies() %>% dplyr::select(2)
+used_packages <-renv::dependencies(progress = FALSE) %>% dplyr::select(2)
 
 df_session_packages <- df_session_packages %>% 
   dplyr::filter(Package %in% used_packages$Package)
