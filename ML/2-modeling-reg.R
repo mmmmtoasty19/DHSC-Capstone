@@ -29,7 +29,8 @@ set.seed(070823) #set seed for reproducible research
 
 # load-data ---------------------------------------------------------------
 
-model_data <- readr$read_rds(here("ML","data-unshared","model_data.RDS"))
+model_data <- readr$read_rds(here("ML","data-unshared","model_data.RDS")) %>%
+  dplyr::select(-subject_id, -charttime)
 
 
 # split data --------------------------------------------------------------
@@ -54,26 +55,21 @@ ds_test  <- ds_test %>% dplyr::select(-ft4_dia)
 data_folds <- rsamp$vfold_cv(ds_train, repeats = 5)
 
 
-pred <- dplyr::select(ds_train, -FT4, -subject_id, -charttime)
 
 # recipes ------------------------------------------------------------------
 
 
 # Neural Net, KNN
 normalized_rec <- r$recipe(FT4 ~ ., data = ds_train) %>%
-  r$update_role(subject_id, new_role = "id") %>%
-  r$update_role(charttime, new_role = "time") %>%
   r$step_impute_bag(r$all_predictors()) %>%
-  r$step_dummy(r$all_nominal_predictors()) %>%
-  r$step_corr(r$all_numeric_predictors()) %>%
-  r$step_log(r$all_numeric()) %>%
+  r$step_dummy(gender) %>%
+  # r$step_corr(r$all_numeric_predictors()) %>%
+  # r$step_log(r$all_numeric()) %>%
   r$step_normalize(r$all_numeric())
 
 
 # Random Forest and Boasted Tree
 rf_rec <- r$recipe(FT4 ~ . , data = ds_train) %>%
-  r$update_role(subject_id, new_role = "id") %>%
-  r$update_role(charttime, new_role = "time") %>%
   r$step_impute_bag(r$all_predictors())
 
 
@@ -95,7 +91,7 @@ knn_spec <-
 
 
 rf_spec <-
-  p$rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>%
+  p$rand_forest(mtry = tune(), min_n = tune(), trees = tune()) %>%
   p$set_engine("ranger") %>%
   p$set_mode("regression")
 
@@ -114,10 +110,10 @@ nnet_param <-
   update(hidden_units = d$hidden_units(c(1, 27)))
 
 
-rf_parma <-
+rf_param <-
   rf_spec %>%
   tune$extract_parameter_set_dials() %>%
-  update(mtry = d$finalize(d$mtry(), pred))
+  d$finalize(ds_train)
 
 
 
@@ -127,7 +123,9 @@ rf_parma <-
 normalized <-
   workflowsets::workflow_set(
     preproc = list(normalized = normalized_rec),
-    models = list(KNN = knn_spec, neural_network = nnet_spec)
+    models = list(
+      # KNN = knn_spec,
+      neural_network = nnet_spec)
   ) %>%
   workflowsets::option_add(param_info = nnet_param, id = "normalized_neural_network")
 
@@ -135,7 +133,8 @@ forests <-
   workflowsets::workflow_set(
     preproc = list(forests = rf_rec),
     models = list(RF = rf_spec, boosting = xgb_spec)
-  )
+  ) %>%
+  workflowsets::option_add(param_info = rf_param, id = "forests_RF")
 
 
 all_workflows <-
