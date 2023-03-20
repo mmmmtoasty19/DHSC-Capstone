@@ -124,7 +124,7 @@ normalized <-
   workflowsets::workflow_set(
     preproc = list(normalized = normalized_rec),
     models = list(
-      # KNN = knn_spec,
+      KNN = knn_spec,
       neural_network = nnet_spec)
   ) %>%
   workflowsets::option_add(param_info = nnet_param, id = "normalized_neural_network")
@@ -145,12 +145,18 @@ all_workflows <-
 
 # grid search -------------------------------------------------------------
 
+num_cores <- parallel::detectCores() - 1
+
+
 grid_ctrl <-
   tune$control_grid(
     save_pred = TRUE,
     parallel_over = "everything",
-    save_workflow = TRUE
+    save_workflow = TRUE,
+    verbose = TRUE
   )
+
+doParallel::registerDoParallel(cores = num_cores)
 
 grid_results <-
   all_workflows %>%
