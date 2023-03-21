@@ -60,17 +60,16 @@ data_folds <- rsamp$vfold_cv(ds_train, repeats = 5)
 
 
 # Neural Net, KNN
-normalized_rec <- r$recipe(FT4 ~ ., data = ds_train) %>%
-  r$step_impute_bag(r$all_predictors()) %>%
-  r$step_dummy(gender) %>%
-  # r$step_corr(r$all_numeric_predictors()) %>%
-  # r$step_log(r$all_numeric()) %>%
-  r$step_normalize(r$all_numeric())
+normalized_rec <- recipes::recipe(FT4 ~ ., data = ds_train) %>%
+  recipes::step_impute_bag(recipes::all_predictors()) %>%
+  # recipes::step_corr(recipes::all_numeric_predictors()) %>%
+  recipes::step_normalize(recipes::all_numeric_predictors() , -anchor_age) %>%
+  recipes::step_dummy(gender)
 
 
 # Random Forest and Boasted Tree
-rf_rec <- r$recipe(FT4 ~ . , data = ds_train) %>%
-  r$step_impute_bag(r$all_predictors())
+rf_rec <- recipes::recipe(FT4 ~ . , data = ds_train) %>%
+  recipes::step_impute_bag(recipes::all_predictors())
 
 
 
@@ -103,6 +102,17 @@ xgb_spec <-
   p$set_mode("regression")
 
 
+svm_r_spec <-
+  p$svm_rbf(cost = tune(), rbf_sigma = tune()) %>%
+  p$set_engine("kernlab") %>%
+  p$set_mode("regression")
+
+svm_p_spec <-
+  p$svm_poly(cost = tune(), degree = tune()) %>%
+  p$set_engine("kernlab") %>%
+  p$set_mode("regression")
+
+
 
 nnet_param <-
   nnet_spec %>%
@@ -124,6 +134,8 @@ normalized <-
   workflowsets::workflow_set(
     preproc = list(normalized = normalized_rec),
     models = list(
+      # SVM_radial = svm_r_spec,
+      # SVM_poly = svm_p_spec,
       KNN = knn_spec,
       neural_network = nnet_spec)
   ) %>%
@@ -143,20 +155,33 @@ all_workflows <-
 
 
 
+# workflow screening ------------------------------------------------------
+num_cores <- parallel::detectCores() - 1
+doParallel::registerDoParallel(cores = num_cores)
+
+screen_workflows <- all_workflows %>%
+  workflowsets::workflow_map(
+    resamples = data_folds,
+    verbose = TRUE
+  )
+
+
+
+
+
 # grid search -------------------------------------------------------------
 
-num_cores <- parallel::detectCores() - 1
+
 
 
 grid_ctrl <-
   tune$control_grid(
     save_pred = TRUE,
     parallel_over = "everything",
-    save_workflow = TRUE,
-    verbose = TRUE
+    save_workflow = TRUE
   )
 
-doParallel::registerDoParallel(cores = num_cores)
+
 
 grid_results <-
   all_workflows %>%
@@ -165,4 +190,5 @@ grid_results <-
     ,resamples = data_folds
     ,grid = 25
     ,control = grid_ctrl
+    ,verbose = TRUE
   )
