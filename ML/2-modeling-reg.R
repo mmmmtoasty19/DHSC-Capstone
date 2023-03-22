@@ -71,7 +71,9 @@ normalized_rec <- recipes::recipe(FT4 ~ ., data = ds_train) %>%
 rf_rec <- recipes::recipe(FT4 ~ . , data = ds_train) %>%
   recipes::step_impute_bag(recipes::all_predictors())
 
-
+boost_rec <- recipes::recipe(FT4 ~ . , data = ds_train) %>%
+  recipes::step_impute_bag(recipes::all_predictors()) %>%
+  recipes::step_dummy(gender)
 
 
 # models ------------------------------------------------------------------
@@ -134,29 +136,34 @@ normalized <-
   workflowsets::workflow_set(
     preproc = list(normalized = normalized_rec),
     models = list(
-      # SVM_radial = svm_r_spec,
+      SVM_radial = svm_r_spec,
       # SVM_poly = svm_p_spec,
       KNN = knn_spec,
       neural_network = nnet_spec)
   ) %>%
   workflowsets::option_add(param_info = nnet_param, id = "normalized_neural_network")
 
-forests <-
+forest <-
   workflowsets::workflow_set(
     preproc = list(forests = rf_rec),
-    models = list(RF = rf_spec, boosting = xgb_spec)
+    models = list(RF = rf_spec)
   ) %>%
   workflowsets::option_add(param_info = rf_param, id = "forests_RF")
 
+boost <-
+  workflowsets::workflow_set(
+    preproc = list(boost = boost_rec),
+    models = list(boosting = xgb_spec)
+  )
 
 all_workflows <-
-  dplyr::bind_rows(normalized, forests) %>%
-  dplyr::mutate(wflow_id = gsub("(forests_)|(normalized_)", "", wflow_id))
+  dplyr::bind_rows(normalized, forest, boost) %>%
+  dplyr::mutate(wflow_id = gsub("(forest_)|(normalized_)|(boost_)", "", wflow_id))
 
 
 
 # workflow screening ------------------------------------------------------
-num_cores <- parallel::detectCores() - 1
+num_cores <- parallel::detectCores() - 2
 doParallel::registerDoParallel(cores = num_cores)
 
 screen_workflows <- all_workflows %>%
