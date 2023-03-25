@@ -172,3 +172,6 @@ screen_workflows <- all_workflows %>%
     verbose = TRUE
   )
 
+saveRDS(
+  screen_workflows, here::here("ML", "outputs", "workflowscreen_class.rds")
+  ,compress = TRUE)

@@ -174,7 +174,9 @@ screen_workflows <- all_workflows %>%
 
 
 
-
+saveRDS(
+  screen_workflows, here::here("ML", "outputs", "workflowscreen.rds")
+  ,compress = TRUE)
 
 # grid search -------------------------------------------------------------
 
