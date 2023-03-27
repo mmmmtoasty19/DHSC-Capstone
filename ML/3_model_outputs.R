@@ -30,6 +30,7 @@ set.seed(070823) #set seed for reproducible research
 # load-data ---------------------------------------------------------------
 
 screen_workflows_reg <- readr::read_rds(here("ML","outputs","workflowscreen_reg.rds"))
+screen_workflows_class <- readr::read_rds(here("ML","outputs","workflowscreen_class.rds"))
 
 
 
@@ -56,6 +57,32 @@ ggplot2::autoplot(
   ggplot2::scale_color_manual(values = rep("black", times = 5)) +
   ggplot2::theme(legend.position = "none")
 
+class_results <- screen_workflows_class %>%
+  workflowsets::rank_results()
+
+
+ggplot2::autoplot(
+  screen_workflows_class
+  ,rank_metric = "roc_auc"
+  ,metric = "roc_auc"
+  ,select_best = TRUE
+) +
+  ggplot2::geom_text(ggplot2::aes(y = mean, label = wflow_id)
+                     # ,angle = 90
+                     ,hjust = -0.2
+  ) +
+  ggplot2::theme_bw() +
+  ggplot2::scale_color_manual(values = rep("black", times = 5)) +
+  ggplot2::theme(legend.position = "none")
+
+
+
+# best results ------------------------------------------------------------
+
+best_class_result <-
+  screen_workflows_class %>%
+  workflowsets::extract_workflow_set_result("forests_RF") %>%
+  tune::select_best(metric = "accuracy")
 
 
 

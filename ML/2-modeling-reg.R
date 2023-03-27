@@ -178,26 +178,3 @@ saveRDS(
   screen_workflows, here::here("ML", "outputs", "workflowscreen.rds")
   ,compress = TRUE)
 
-# grid search -------------------------------------------------------------
-
-
-
-
-grid_ctrl <-
-  tune$control_grid(
-    save_pred = TRUE,
-    parallel_over = "everything",
-    save_workflow = TRUE
-  )
-
-
-
-grid_results <-
-  all_workflows %>%
-  workflowsets::workflow_map(
-    seed = 070823
-    ,resamples = data_folds
-    ,grid = 25
-    ,control = grid_ctrl
-    ,verbose = TRUE
-  )
