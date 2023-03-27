@@ -124,6 +124,34 @@ class_test_result_conf_matrix <- ys$conf_mat(
 
 
 
+
+# x-boost- class ----------------------------------------------------------
+
+x_boost_rec <- r$recipe(ft4_dia ~ . , data = ds_train) %>%
+  r$step_rm(FT4) %>%
+  r$step_impute_bag(r$all_predictors()) %>%
+  r$step_dummy(gender)
+
+xgb_spec <-
+  p$boost_tree(tree_depth = tune(), learn_rate = tune(), loss_reduction = tune(),
+               min_n = tune(), sample_size = tune(), trees = tune()) %>%
+  p$set_engine("xgboost") %>%
+  p$set_mode("classification")
+
+xboost_wf <- wf$workflow() %>%
+  wf$add_model(xgb_spec) %>%
+  wf$add_recipe(x_boost_rec)
+
+xboost_parms <- p$extract_parameter_set_dials(rxgb_spec)
+
+xboost_tune <- rf_workflow %>%
+    tune::tune_grid(
+    data_fold
+    ,grid = xboost_parms%>% d$grid_regular()
+  )
+
+
+
 # random forest regression ------------------------------------------------
 #
 reg_metrics <- ys$metric_set(ys$rmse, ys$rsq, ys$mae)
