@@ -142,13 +142,55 @@ xboost_wf <- wf$workflow() %>%
   wf$add_model(xgb_spec) %>%
   wf$add_recipe(x_boost_rec)
 
-xboost_parms <- p$extract_parameter_set_dials(rxgb_spec)
+xboost_parms <- p$extract_parameter_set_dials(xgb_spec)
 
-xboost_tune <- rf_workflow %>%
-    tune::tune_grid(
-    data_fold
-    ,grid = xboost_parms%>% d$grid_regular()
+# takes around 6 hours to tune
+# xboost_tune <- xboost_wf %>%
+#     tune::tune_grid(
+#     data_fold
+#     ,grid = xboost_parms%>% d$grid_regular()
+#     ,control = tune::control_grid(verbose = TRUE)
+#   )
+
+
+xboost_best_params <- readRDS(here::here("ML", "outputs", "xboosttune_class.rds")) %>%
+  tune::select_best(metric = "accuracy")
+
+
+final_xboost_wf <- xboost_wf %>%
+  tune::finalize_workflow(xboost_best_params)
+
+# fit training data to best model
+
+final_xboost_fit <- p$fit(final_xboost_wf, ds_train)
+
+final_xboost_predict <- ds_train %>%
+  dplyr::select(ft4_dia) %>%
+  dplyr::bind_cols(
+    predict(final_xboost_fit, ds_train)
+    ,predict(final_xboost_fit, ds_train, type = "prob")
   )
+
+ys$accuracy(final_xboost_predict,truth = ft4_dia, estimate = .pred_class )
+
+final_conf_xboost <- ys$conf_mat(final_xboost_predict, ft4_dia, .pred_class)
+
+
+# fitting test data
+
+class_test_results_boost <-
+  final_xboost_fit %>%
+  tune::last_fit(split = model_data_split)
+
+
+ys$accuracy(class_test_results_boost %>% tune::collect_predictions()
+            ,truth = ft4_dia, estimate = .pred_class )
+
+class_test_result_conf_matrix <- ys$conf_mat(
+  class_test_results_boost %>%  tune::collect_predictions()
+  ,truth = ft4_dia
+  ,estimate = .pred_class
+)
 
 
 
