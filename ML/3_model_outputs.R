@@ -18,6 +18,7 @@ box::use(
   ,d = dials
   ,rsamp = rsample
   ,tune
+  ,workflowsets
 )
 
 
