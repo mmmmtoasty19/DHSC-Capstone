@@ -311,38 +311,5 @@ model_data %>%
 
 
 
-# nnet reg ----------------------------------------------------------------
-
-normalized_rec <- recipes::recipe(FT4 ~ ., data = ds_train) %>%
-  recipes::step_rm(ft4_dia) %>%
-  recipes::step_impute_bag(recipes::all_predictors()) %>%
-  # recipes::step_corr(recipes::all_numeric_predictors()) %>%
-  recipes::step_normalize(recipes::all_numeric_predictors() , -anchor_age) %>%
-  recipes::step_dummy(gender)
-
-nnet_spec <-
-  p$mlp(hidden_units = tune(), penalty = tune(), epochs = tune()) %>%
-  p$set_engine("nnet", MaxNWts = 2600) %>%
-  p$set_mode("regression")
-
-nnet_param <-
-  nnet_spec %>%
-  tune$extract_parameter_set_dials() %>%
-  update(hidden_units = d$hidden_units(c(1, 27)))
-
-nnet_reg_workflow <- wf$workflow() %>%
-  wf$add_model(nnet_spec) %>%
-  wf$add_recipe(normalized_rec)
-
-data_fold_reg <- rsamp$vfold_cv(ds_train, v = 5)
-
-nnet_reg_tune <- nnet_reg_workflow %>%
-    tune::tune_grid(
-    data_fold_reg
-    ,grid = nnet_param %>% d$grid_regular()
-    ,verbose = TRUE
-  )
-
-
 
 
