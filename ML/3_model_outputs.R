@@ -56,7 +56,27 @@ ggplot2::autoplot(
                      ) +
   ggplot2::theme_bw() +
   ggplot2::scale_color_manual(values = rep("black", times = 5)) +
-  ggplot2::theme(legend.position = "none")
+  ggplot2::theme(legend.position = "none") +
+  ggplot2::labs(
+    title = "Regression Model Screening"
+    ,y = "RMSE"
+  ) +
+  ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+
+
+gp2$ggsave(
+  here("figures","reg_screen.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
+)
+gp2$ggsave(
+  here("figures","reg_screen.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+)
 
 class_results <- screen_workflows_class %>%
   workflowsets::rank_results()
@@ -74,8 +94,26 @@ ggplot2::autoplot(
   ) +
   ggplot2::theme_bw() +
   ggplot2::scale_color_manual(values = rep("black", times = 5)) +
-  ggplot2::theme(legend.position = "none")
+  ggplot2::theme(legend.position = "none") +
+  ggplot2::labs(
+    title = "Classification Model Screening"
+    ,y = "Accuracy"
+  ) +
+  ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
 
+gp2$ggsave(
+  here("figures","class_screen.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
+)
+gp2$ggsave(
+  here("figures","class_screen.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+)
 
 
 # best results ------------------------------------------------------------

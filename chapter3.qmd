@@ -1,10 +1,23 @@
 # Methods
 
-need brief description and IRB statement
+## IRB
+
+Based on the information you submitted for this project, the Campbell
+University Institutional Review Board (Campbell IRB) determined this
+submission is Not Human Subjects Research as defined by 45 CFR
+46.102(e).
 
 ## Population and Data
 
-This study was designed using the Medical Information Mart for Intensive Care (MIMIC) database [@johnsonalistair]. MIMIC (Medical Information Mart for Intensive Care) is an extensive, freely-available database comprising de-identified health-related data from patients who were admitted to the critical care units of the Beth Israel Deaconess Medical Center. The database contains many different types of information, but only data from the patients and laboratory events table are used in this study. The study uses version IV of the database, comprising data from 2008 - 2019.
+This study used the Medical Information Mart for Intensive Care (MIMIC)
+database [@johnsonalistair]. MIMIC (Medical Information Mart for
+Intensive Care) is an extensive, freely-available database comprising
+de-identified health-related data from patients who were admitted to the
+critical care units of the Beth Israel Deaconess Medical Center. The
+database contains many different types of information, but only data
+from the patients and laboratory events table are used in this study.
+The study uses version IV of the database, comprising data from 2008 -
+2019.
 
 ## Data Variables and Outcomes
 
@@ -15,19 +28,37 @@ source(here::here("ML","1-data-exploration.R"))
 
 ```
 
-A total of 18 variables were chosen for this study. The age and gender of the patient were pulled from the patient table in the MIMIC database. While this database contains some additional demographic information, it is incomplete and thus unusable for this study. 15 lab values were selected for this study, this includes:
+A total of 18 variables were chosen for this study. The age and gender
+of the patient were pulled from the patient table in the MIMIC database.
+While this database contains some additional demographic information, it
+is incomplete and thus unusable for this study. 15 lab values were
+selected for this study, this includes:
 
--   **BMP**: BUN, bicarbonate, calcium, chloride, creatinine, glucose, potassium, sodium
+-   **BMP**: BUN, bicarbonate, calcium, chloride, creatinine, glucose,
+    potassium, sodium
 
--   **CBC**: Hematocrit, hemoglobin, platelet count, red blood cell count, white blood cell count
+-   **CBC**: Hematocrit, hemoglobin, platelet count, red blood cell
+    count, white blood cell count
 
 -   TSH
 
 -   Free T4
 
-The unique patient id and chart time were also retained for identifying each sample. Each sample contains one set of 16 lab values for each patient. Patients may have several samples in the data set run at different times. Rows were retained as long as they had less than three missing results. These missing results can be filled in by imputation later in the process. Samples were also filtered for those with TSH above or below the reference range of 0.27 - 4.2 uIU/mL. These represent samples that would have reflexed for Free T4 testing. After filtering, the final data set contained `r nrow(ds1)` rows.
+The unique patient id and chart time were also retained for identifying
+each sample. Each sample contains one set of 16 lab values for each
+patient. Patients may have several samples in the data set run at
+different times. Rows were retained as long as they had less than three
+missing results. These missing results can be filled in by imputation
+later in the process. Samples were also filtered for those with TSH
+above or below the reference range of 0.27 - 4.2 uIU/mL. These represent
+samples that would have reflexed for Free T4 testing. After filtering,
+the final data set contained `r nrow(ds1)` rows.
 
-Once the final data set was collected, an additional column was created for the outcome variable to determine if the Free T4 value was diagnostic. This outcome variable was used for building classification models. The classification variable was not used in regression models. @tbl-outcome_var shows how the outcomes were added
+Once the final data set was collected, an additional column was created
+for the outcome variable to determine if the Free T4 value was
+diagnostic. This outcome variable was used for building classification
+models. The classification variable was not used in regression models.
+@tbl-outcome_var shows how the outcomes were added
 
 | TSH Value     | Free T4 Value | Outcome             |
 |---------------|---------------|---------------------|
@@ -38,7 +69,14 @@ Once the final data set was collected, an additional column was created for the 
 
 : Outcome Variable {#tbl-outcome_var}
 
-. @tbl-data_summary shows the summary statistics of each variable selected for the study. Each numeric variable is listed with the percent missing, median, and interquartile range (IQR). The data set is weighted toward elevated TSH levels, with 80% of values falling into that category. Glucose and Calcium have several missing values at `r gtsummary::inline_text(summary_tbl, variable = GLU, column = n)` and `r gtsummary::inline_text(summary_tbl, variable = CA, column = n)`, respectively.
+. @tbl-data_summary shows the summary statistics of each variable
+selected for the study. Each numeric variable is listed with the percent
+missing, median, and interquartile range (IQR). The data set is weighted
+toward elevated TSH levels, with 80% of values falling into that
+category. Glucose and Calcium have several missing values at
+`r gtsummary::inline_text(summary_tbl, variable = GLU, column = n)` and
+`r gtsummary::inline_text(summary_tbl, variable = CA, column = n)`,
+respectively.
 
 ```{r}
 #| label: tbl-data_summary
@@ -50,19 +88,40 @@ summary_tbl %>% gtsummary$as_kable()
 
 ## Data Inspection
 
-By examining @tbl-data_summary several important data set characteristics quickly come to light without explanation. The median age across the data set, as a whole, is quite similar, with a median age across all categories of 62.5. Females are better represented in the data set, with higher percentages in all categories. Across all categories, the median values for each lab result are quite similar. The expectation for this is Red Blood cells, which show larger variation across the various categories.
+By examining @tbl-data_summary several important data set
+characteristics quickly come to light without explanation. The median
+age across the data set, as a whole, is quite similar, with a median age
+across all categories of 62.5. Females are better represented in the
+data set, with higher percentages in all categories. Across all
+categories, the median values for each lab result are pretty similar.
+The expectation for this is Red Blood cells, which show more
+considerable variation across the various categories.
 
-![Distribution of Variables](figures/distrubution_histo){#fig-distro_histo}
+![Distribution of
+Variables](figures/distrubution_histo){#fig-distro_histo}
 
-When examining @fig-distro_histo, many clinical chemistry values do not show a standard distribution. However, the hematology results typically do appear to follow a standard distribution. While not a problem for most tree-based classification models, many regression models perform better with standard variables. Standardizing variables provides a common comparable unit of measure across all the variables [@boehmke2020]. Since lab values do not contain negative numbers, all numeric values will be log-transformed to bring them to normal distributions.
+When examining @fig-distro_histo, many clinical chemistry values do not
+show a standard distribution. However, the hematology results typically
+do appear to follow a standard distribution. While not a problem for
+most tree-based classification models, many regression models perform
+better with standard variables. Standardizing variables provides a
+common comparable unit of measure across all the variables
+[@boehmke2020]. Since lab values do not contain negative numbers, all
+numeric values will be log-transformed to bring them to normal
+distributions.
 
 ![Variable Correlation Plot](figures/corr_plot){#fig-corr_plot}
 
-@fig-corr_plot shows a high correlation between better Hemoglobin, hematocrit, and Red Blood Cell values (as would be expected). While high correlation does not lead to model issues, it can cause unnecessary computations with little value. However, due to the small about of variables to begin with
+@fig-corr_plot shows a high correlation between better Hemoglobin,
+hematocrit, and Red Blood Cell values (as would be expected). While high
+correlation does not lead to model issues, it can cause unnecessary
+computations with little value. However, due to the small about of
+variables to begin with
 
 ## Data Tools
 
-All data handling and modeling were performed using R and R Studio. The current report was rendered in the following environment.
+All data handling and modeling were performed using R and R Studio. The
+current report was rendered in the following environment.
 
 ```{r}
 #| label: tbl-platform-info
@@ -116,4 +175,34 @@ knitr::kable(
 
 ## Model Selection
 
-This section will be updated to explain how both the final classification and regression model were chosen. The model building is still in progress. Also will be updating the research question to reflect the final product and just better wording.
+Both classification and regression models were screened using a random
+grid search to tune hyperparameters. The models were tested against the
+training data set to find the best-fit model. @fig-reg-screen shows the
+results of the model screening for regression models, using root mean
+square error (RMSE) as the ranking method. Random Forest models and
+boosted trees performed similarly and were selected for further testing.
+A full grid search was performed on both models, with a Random Forest
+model as the final selection. The final hyperparameters selected were:
+
+-   mtry: 8
+
+-   trees: 1000
+
+-   minimum nodes: 2
+
+![Regression Model Screen](figures/reg_screen){#fig-reg-screen}
+
+@fig-class-screen shows the results of the model screen for
+classification models using accuracy as the ranking method. As with
+regression models, boosted tress and random forest models performed the
+best. After completing a full grid search of both model types, a random
+forest model was again chosen as the final model. The final
+hyperparameters for the model selected were:
+
+-   mtry: 8
+
+-   trees: 2000
+
+-   minimun nodes: 2
+
+![Classification Model Screen](figures/class_screen){#fig-class-screen}

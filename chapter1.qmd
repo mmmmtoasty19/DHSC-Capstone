@@ -11,8 +11,8 @@ American Medical Association survey later showed that 48% of U.S.
 hospitals had clinical laboratories by 1923 [@berger1999]. Before 1960,
 almost all testing in the laboratory was performed using manual methods.
 In the mid-1960s, a limited amount of automated analyzers became
-available, allowing for more rapid testing and running multiple tests at
-the same time [@park2017].
+available, allowing for more rapid testing and running multiple tests
+simultaneously [@park2017].
 
 Since these early days of automation in the last fifty years, the
 clinical laboratory has rapidly expanded automation techniques. These
@@ -31,17 +31,17 @@ to go along with the advances in instrument technology.
 
 Over the past few decades, Laboratory Information Systems (LIS) have
 evolved from relatively narrow, often arcane, or home-grown systems into
-sophisticated systems that are more user-friendly and support a broader
-range of functions and integration with other technologies that
-laboratories deploy [@henricks2015]. Modern LISs consist of complex,
-interrelated computer programs and infrastructure that support
-laboratories' vast array of information-processing needs. LISs have
-functions in all phases of patient testing, including specimen and test
-order intake, specimen processing and tracking, support of analysis and
-interpretation, and report creation and distribution. In addition, LISs
-provide management reports and other data that laboratories need to run
-their operations and to support continuous improvement and quality
-initiatives [@henricks2015].
+sophisticated, more user-friendly systems that support a broader range
+of functions and integration with other technologies that laboratories
+deploy [@henricks2015]. Modern LISs consist of complex, interrelated
+computer programs and infrastructure that support laboratories' vast
+array of information-processing needs. LISs have functions in all phases
+of patient testing, including specimen and test order intake, specimen
+processing and tracking, support of analysis and interpretation, and
+report creation and distribution. In addition, LISs provide management
+reports and other data that laboratories need to run their operations
+and to support continuous improvement and quality initiatives
+[@henricks2015].
 
 The clinical laboratory's primary business purpose is to provide testing
 results requested by physicians and other healthcare professionals. In a
@@ -72,21 +72,19 @@ testing using machine learning algorithms.
 
 ## Purpose and Research Statement
 
-<!--# need to rewrite this question -->
-
 Develop and test a machine learning algorithm to establish if said
-algorithm can perform better than current hard-coded rules to reduce
-unnecessary patient testing.
+algorithm can predict either the FT4 result or the laboratory diagnosis
+of hyper or hypothyroidism.
 
 ## Significance
 
-Health spending in the U.S. increased by 4.6% in 2019 to \$3.8 trillion
-or \$11,582 per capita. This growth rate is in line with 2018 (4.7
-percent) and slightly faster than what was observed in 2017 (4.3
-percent) [@americanmedicalassociation2021]. Although laboratory costs
-comprise only about 5% of the healthcare budget in the United States, it
-is estimated that laboratory services drive up to 70% of all downstream
-medical decisions, which encompass a substantial portion of the budget
+U.S. health spending increased by 4.6% in 2019 to \$3.8 trillion or
+\$11,582 per capita. This growth rate is in line with 2018 (4.7 percent)
+and slightly faster than what was observed in 2017 (4.3 percent)
+[@americanmedicalassociation2021]. Although laboratory costs comprise
+only about 5% of the healthcare budget in the United States, it is
+estimated that laboratory services drive up to 70% of all downstream
+medical decisions, encompassing a substantial portion of the budget
 [@ma2019]. As healthcare budgets increase, payers, including Medicare,
 commercial insurers, and employers, will demand accountability and
 eliminate the abuse and misuse of ineffective testing strategies
@@ -110,7 +108,7 @@ thyroid dysfunction in most clinical settings [@plebani2020].
 Traditionally the cutoff for reflex testing was simply the reference
 range for a patient's sex and race. However, recent studies have
 suggested that widening these ranges reduces reflex testing by up to 34%
-[@plebani2020]. In an additional study, the authors concluded that the
+[@plebani2020]. In additional research, the authors concluded that the
 TSH reference range leading to reflex Free T4 testing could likely be
 widened to decrease the number of unnecessary Free T4 measurements
 performed. This reduction would reduce overall costs to the medical

@@ -117,7 +117,7 @@ computed by aggregating the errors across the entire validation data set
 <!--# Table needs to be modified -->
 
 | **Author and Year** | **Objective and Machine Learning Task**                                                                         | **Best Model** | **Major Themes** |
-|-------------|---------------------------------|-------------|-------------|
+|---------------------|-----------------------------------------------------------------------------------------------------------------|----------------|------------------|
 | Azarkhish (2012)    | Predict iron deficiency anemia and serum iron levels from CBC indices                                           | Neural Network | Prediction       |
 | Cao (2012)          | Triage manual review for urinalysis samples                                                                     | Tree-based     | Automation       |
 | Yang (2013)         | Predict normal reference ranges of ESR for various laboratories based on geographic and other clinical features | Neural Network | Interpretation   |
