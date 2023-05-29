@@ -29,17 +29,17 @@ of supervision, whether are not the algorithm can learn incrementally
 from an incoming stream of data (batch and online learning), and how
 they generalize (instance-based versus model-based learning)
 [@debruyne2021]. Rabbani et al. further classified the specific clinical
-chemistry uses into five board categories, predicting laboratory test
+chemistry uses into five broad categories, predicting laboratory test
 values, improving laboratory utilization, automating laboratory
 processes, promoting precision laboratory test interpretation, and
 improving laboratory medicine information systems [-@rabbani2022].
 
-### Supervised vs Unsupervised Learning
+### Supervised vs. Unsupervised Learning
 
 Four important categories can be distinguished based on the amount and
 type of supervision the models receive during training: supervised,
-unsupervised, semi-supervised, and reinforcement learning. In supervised
-learning, training data are labeled, and data samples are predicted with
+unsupervised, semi-supervised, and reinforcement learning. Training data
+are labeled in supervised learning, and data samples are predicted with
 knowledge about the desired solutions [@debruyne2021]. They are
 typically used for classification and regression purposes. Some of the
 essential supervised algorithms are Linear Regression, Logistic
@@ -54,21 +54,110 @@ visualization, and dimensionality reduction (e.g., principal component
 analysis (PCA), kernel PCA, locally linear embedding, t-distributed
 stochastic neighbor embedding), anomaly detection and novelty detection
 (e.g., one-class SVM, isolation forest) and association rule learning
-(e.g. apriori, eclat). However, some models can deal with partially
+(e.g., apriori, eclat). However, some models can deal with partially
 labeled training data (i.e., semi-supervised learning). At last, in
 reinforcement learning, an agent (i.e., the learning system) learns what
 actions to take to optimize the outcome of a strategy (i.e., a policy)
 or to get the maximum cumulative reward [@debruyne2021]. This system
-resembles humans learning to ride a bike and can typically be used in
+resembles humans learning to ride a bike. It can typically be used in
 learning games, such as Go, chess, or even poker, or settings where the
 outcome is continuous rather than dichotomous (i.e., right or
 wrong)[@debruyne2021]. The proposed study will use supervised learning,
-as the data is labeled and a particular outcome is expected.
+as the data is labeled, and a particular outcome is expected.
+
+### Model Types
+
+#### Random Forests
+
+Random forests are an ensemble learning method that combines multiple
+decision trees to make predictions or classify data. It was first
+introduced by Leo Breiman in 2001 and has since gained popularity due to
+its robustness and accuracy [@liaw2002]. The algorithm creates many
+decision trees, each trained on a different subset of the data using
+bootstrap aggregating or "bagging." The random forests algorithm (for
+both classification and regression) is as follows:
+
+1.  Draw ntree bootstrap samples from the original data.
+
+2.  For each bootstrap sample, grow an unpruned classification or
+    regression tree, with the following modification: at each node,
+    rather than choosing the best split among all predictors, randomly
+    sample mtry of the predictors and choose the best split from among
+    those variables. (Bagging can be considered a special case of random
+    forests obtained when mtry = p, the number of predictors.)
+
+3.  Predict new data by aggregating the predictions of the ntree trees
+    (i.e., majority votes for classification, average for regression)
+    [@liaw2002].
+
+Random forests offer several advantages that make them well-suited for
+predictive modeling in healthcare:
+
+1.  Robustness: Random forests are less prone to overfitting than
+    individual decision trees. The aggregation of multiple trees helps
+    to reduce the impact of outliers and noise in the data, resulting in
+    more stable and reliable predictions.
+
+2.  Variable Importance: Random forests provide estimates of the
+    importance of different features in making predictions. This
+    information aids in feature selection, identifying the most
+    influential factors, and gaining insights into the underlying data
+    relationships.
+
+3.  Handling Complex Data: Random forests can take various data types,
+    including categorical and numerical features, without extensive
+    preprocessing. This flexibility makes them suitable for healthcare
+    datasets often comprising diverse variables [@breiman2001a].
+
+#### Gradient Boosting
+
+Gradient boosting machines (GBMs) are an extremely popular machine
+learning algorithm that have proven successful across many domains and
+is one of the leading methods for winning Kaggle competitions. Whereas
+random forests build an ensemble of deep independent trees, GBMs build
+an ensemble of shallow trees in sequence, with each tree learning and
+improving on the previous one. Although shallow trees by themselves are
+relatively weak predictive models, they can be "boosted" to produce a
+powerful "committee" that, when appropriately tuned, is often hard to
+beat with other algorithms [@boehmke2020]. Gradient boosting involves
+the following key steps:
+
+1.  Building an Initial Model: The algorithm creates an initial model,
+    typically a simple decision tree, to make predictions.
+
+2.  Calculation of Residuals: The residuals represent the differences
+    between the actual values and the predictions of the current model.
+
+3.  Fitting Subsequent Models: Subsequent weak models are trained to
+    predict the residuals of the previous model. These models are fitted
+    to minimize residual errors, typically using gradient descent
+    optimization.
+
+4.  Ensemble Creation: The predictions of all the weak models are
+    combined by summing them, creating a strong predictive model.
+
+5.  Iterative Improvement: The process is repeated for multiple
+    iterations, with each new model attempting to reduce further the
+    errors made by the previous models[@chen2016].
+
+Gradient boosting offers several advantages that include:
+
+1.  High Predictive Accuracy: By combining multiple weak models,
+    gradient boosting can achieve high predictive accuracy, often
+    outperforming other machine learning algorithms.
+
+2.  Handling Complex Relationships: Gradient boosting can capture
+    complex nonlinear relationships between input and target variables,
+    making it suitable for datasets with intricate patterns.
+
+3.  Robustness to Outliers and Noise: The iterative nature of gradient
+    boosting helps reduce the impact of outliers and noise in the data,
+    leading to more robust predictions [@chen2016].
 
 ### Machine Learning Workflow
 
 Since this study will focus on supervised learning, the review will
-focus on that. Machine learning can be broken into three board steps,
+focus on that. Machine learning can be broken into three broad steps,
 data cleaning and processing, training and testing the model, and
 finally, the model is evaluated, deployed, and monitored
 [@debruyne2021]. In the first phase, data is collected, cleaned, and
@@ -82,7 +171,7 @@ the rest of the model building. The Training set data is used to develop
 feature sets, train our algorithms, tune hyperparameters, compare
 models, and all the other activities required to choose a final model
 (e.g., the model we want to put into production) [@boehmke2020]. Once
-the final model is chosen, the test set data is used to estimate an
+the final model is selected, the test set data is used to estimate an
 unbiased assessment of the model's performance, which we refer to as the
 generalization error [@boehmke2020]. Most time (as much as 80%) is
 invested into the data processes stage. After feature engineering, an ML
@@ -101,7 +190,7 @@ primarily based on goodness-of-fit tests and the assessment of
 residuals. Unfortunately, misleading conclusions may follow from
 predictive models that pass these assessments [@breiman2001]. Today, it
 has become widely accepted that a more sound approach to assessing model
-performance is to assess the predictive accuracy via loss functions
+performance is to determine the predictive accuracy via loss functions
 [@boehmke2020]. *Loss functions* are metrics that compare the predicted
 values to the actual value (the output of a loss function is often
 referred to as the error or pseudo residual). When performing resampling
@@ -110,54 +199,66 @@ the actual target value. The overall validation error of the model is
 computed by aggregating the errors across the entire validation data set
 [@boehmke2020]
 
-.<!--# should I talk about Model types ?-->
-
 ### Machine Learning in the Clinical Laboratory
 
-<!--# Table needs to be modified -->
+Rabbani et al. performed a comprehensive study of the current state of
+machine learning in laboratory medicine [-@rabbani2022]. This study
+revealed several exciting applications, including predicting laboratory
+test values, improving laboratory utilization, automating laboratory
+processes, promoting precision laboratory test interpretation, and
+improving laboratory medicine information systems. In these studies,
+tree-based learning algorithms and neural networks often performed best.
+@tbl-lab_ml displays the overview of their research.
 
-| **Author and Year** | **Objective and Machine Learning Task**                                                                         | **Best Model** | **Major Themes** |
-|---------------------|-----------------------------------------------------------------------------------------------------------------|----------------|------------------|
-| Azarkhish (2012)    | Predict iron deficiency anemia and serum iron levels from CBC indices                                           | Neural Network | Prediction       |
-| Cao (2012)          | Triage manual review for urinalysis samples                                                                     | Tree-based     | Automation       |
-| Yang (2013)         | Predict normal reference ranges of ESR for various laboratories based on geographic and other clinical features | Neural Network | Interpretation   |
+| **Author and Year** | **Objective and Machine Learning Task**                                                                                | **Best Model**        | **Major Themes**                       |
+|:-----------------|:-----------------|:-----------------|:-----------------|
+| Azarkhish (2012)    | Predict iron deficiency anemia and serum iron levels from CBC indices                                                  | Neural Network        | Prediction                             |
+| Cao (2012)          | Triage manual review for urinalysis samples                                                                            | Tree-based            | Automation                             |
+| Yang (2013)         | Predict normal reference ranges of ESR for various laboratories based on geographic and other clinical features        | Neural Network        | Interpretation                         |
+| Lidbury (2015)      | Predict liver function test results from other tests in the panel, highlighting redundancy in the liver function panel | Tree-based            | Prediction, Utilization                |
+| Demirci (2016)      | Classify whether critical lab result is valid or invalid using other lab values and clinical information               | Neural Network        | Automation, Interpretation, Validation |
+| Luo (2016)          | Predict ferritin from other tests in iron panel                                                                        | Tree-based            | Prediction, Utilization                |
+| Poole (2016)        | Create personalized reference ranges that take into account patients\' diagnoses                                       | Unsupervised learning | Interpretation                         |
+| Parr (2018)         | Automate mapping of Veterans Affair laboratory data to LOINC codes                                                     | Tree-based            | Information systems, Automation        |
+| Wilkes (2018)       | Classify urine steroid profiles as normal or abnormal, and further interpret into specific disease processes           | Tree-based            | Interpretation, Automation             |
+| Fillmore (2019)     | Automate mapping of Veterans Affair laboratory data to LOINC codes                                                     | Tree-based            | Information systems, Automation        |
+| Lee (2019)          | Predict LDL-C levels from a limited lipid panel more accurately than current gold standard equations                   | Neural Network        | Interpretation, Prediction             |
+| Xu (2019)           | Identify redundant laboratory tests and predict their results as normal or abnormal                                    | Tree-based            | Prediction, Utilization                |
+| Islam (2020)        | Use prior ordering patterns to create an algorithm that can recommend best practice tests for specific diagnoses       | Neural Network        | Utilization                            |
+| Peng (2020)         | Interpret newborn screening assays based on gestational age and other clinical information to reduce false positives   | Tree-based            | Interpretation, Utilization            |
+| Wang (2020)         | Automatically verify if lab test result is valid or invalid                                                            | Tree-based            | Validation, Automation                 |
+| Dunn (2021)         | Predict laboratory test results from wearable data                                                                     | Tree-based            | Prediction                             |
+| Fang (2021)         | Classify blood specimen as clotted or not clotted based on coagulation indices                                         | Neural Network        | Quality control                        |
+| Farrell (2021)      | Automatically identify mislabelled laboratory samples                                                                  | Neural Network        | Quality control, Automation            |
 
 : Summary of characteristics of machine learning algorithms
 [@rabbani2022]. {#tbl-lab_ml}
-
-<!--# Need to fill in this section -->
 
 ## Reflex Testing
 
 The laboratory diagnosis of thyroid dysfunction relies on the
 measurement of circulating concentrations of thyrotropin (TSH), free
 thyroxine (fT4), and, in some cases, free triiodothyronine (fT3). TSH
-measurement is generally regarded as the most sensitive initial
-laboratory test for screening individuals for thyroid hormone
-abnormalities [@woodmansee2018]. TSH and fT4 have a complex, nonlinear
-relationship, such that small changes in fT4 result in relatively large
-changes in TSH [@plebani2020]. Many clinicians and laboratories check
-TSH alone as the initial test for thyroid problems and then only add a
-Free T4 measurement if the TSH is abnormal (outside the laboratory
-normal reference range), this is known as reflex testing
-[@woodmansee2018]. Reflex testing became possible with the advent of
-laboratory information systems (LIS) that were sufficiently flexible to
-permit modification of existing test requests at various stages of the
-analytical process [@srivastava2010]. Reflex testing is widely used, the
-major aim being to optimize the use of laboratory tests. However the
-common practice of reflex testing relies simply on hard coded rules that
-allow no flexibility. For instance in the case of TSH, free T4 will be
-added to the patient order whenever the value falls outside of the
-established laboratory reference range. This bring into the fold the
-issue that the thresholds used to trigger reflex addition of tests vary
-widely. In a study by Murphy he found the hypocalcaemic threshold to
-trigger magnesium measurement varied from 1.50 mmol/L up to 2.20 mmol/L
-[-@murphy2021]. Even allowing for differences in the nature, size and
-staffing of hospital laboratories, and populations served, the extent of
-the observed variation invites scrutiny [@murphy2021].
-
-<!--# insert table and study from strivastava about hypo/hyper thyroid -->
-
-<!--# data from woodmansee and plebani -->
-
-LIT REVIEW TO BE EXPANDED
+measurement is the most sensitive initial laboratory test for screening
+individuals for thyroid hormone abnormalities [@woodmansee2018]. TSH and
+fT4 have a complex, nonlinear relationship, such that small changes in
+fT4 result in relatively significant changes in TSH [@plebani2020]. Many
+clinicians and laboratories check TSH alone as the initial test for
+thyroid problems and only add a Free T4 measurement if the TSH is
+abnormal (outside the laboratory's normal reference range). This is
+known as reflex testing [@woodmansee2018]. Reflex testing became
+possible with the advent of laboratory information systems (LIS) that
+were sufficiently flexible to permit modification of existing test
+requests at various stages of the analytical process [@srivastava2010].
+Reflex testing is widely used, the principal aim being to optimize the
+use of laboratory tests. However, the common practice of reflex testing
+relies simply on hard-coded rules that allow no flexibility. For
+instance, in the case of TSH, free T4 will be added to the patient order
+whenever the value falls outside the established laboratory reference
+range. This brings into the fold the issue that the thresholds used to
+trigger reflex addition of tests vary widely. In a study by Murphy, he
+found the hypocalcaemic threshold to trigger magnesium measurement
+varied from 1.50 mmol/L up to 2.20 mmol/L [-@murphy2021]. Even allowing
+for differences in the nature, size, and staffing of hospital
+laboratories and populations served, the extent of the observed
+variation invites scrutiny [@murphy2021].
