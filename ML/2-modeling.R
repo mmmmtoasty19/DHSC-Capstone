@@ -118,6 +118,7 @@ class_test_result_conf_matrix <- ys$conf_mat(
   ,estimate = .pred_class
   )
 
+ys$accuracy(class_test_results %>%  tune::collect_predictions() ,truth = ft4_dia, estimate = .pred_class )
 
 
 

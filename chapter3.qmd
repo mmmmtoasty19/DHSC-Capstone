@@ -27,7 +27,7 @@ A total of 18 variables were chosen for this study. The age and gender of the pa
 
 -   Free T4
 
-The unique patient id and chart time were also retained for identifying each sample. Each sample contains one set of 16 lab values for each patient. Patients may have several samples in the data set run at different times. Rows were retained as long as they had less than three missing results. These missing results can be filled in by imputation later in the process. Samples were also filtered for those with TSH above or below the reference range of 0.27 - 4.2 uIU/mL. These represent samples that would have reflexed for Free T4 testing. After filtering, the final data set contained `r nrow(ds1)` rows.
+The unique patient id and chart time were also retained for identifying each sample. Each sample contains one set of 15 lab values for each patient. Patients may have several samples in the data set run at different times. Rows were retained as long as they had less than three missing results. These missing results can be filled in by imputation later in the process. Samples were also filtered for those with TSH above or below the reference range of 0.27 - 4.2 uIU/mL. These represent samples that would have reflexed for Free T4 testing. After filtering, the final data set contained `r nrow(ds1)` rows.
 
 Once the final data set was collected, an additional column was created for the outcome variable to determine if the Free T4 value was diagnostic. This outcome variable was used for building classification models. The classification variable was not used in regression models. @tbl-outcome_var shows how the outcomes were added
 
@@ -60,7 +60,7 @@ When examining @fig-distro_histo, many clinical chemistry values do not show a s
 
 ![Variable Correlation Plot](figures/corr_plot){#fig-corr_plot}
 
-@fig-corr_plot shows a high correlation between better Hemoglobin, hematocrit, and Red Blood Cell values (as would be expected). While high correlation does not lead to model issues, it can cause unnecessary computations with little value. However, due to the small about of variables to begin with <!--# FIX THIS SENTENCE -->
+@fig-corr_plot shows a high correlation between Hemoglobin, hematocrit, and Red Blood Cell values (as expected). While high correlation does not lead to model issues, it can cause unnecessary computations with little value. However, due to the small number of variables, the computation burden is not expected to cause delays, and thus the variables will not be removed.
 
 ## Data Tools
 
@@ -128,12 +128,12 @@ Both classification and regression models were screened using a random grid sear
 
 ![Regression Model Screen](figures/reg_screen){#fig-reg-screen}
 
-@fig-class-screen shows the results of the model screen for classification models using accuracy as the ranking method. As with regression models, boosted tress and random forest models performed the best. After completing a full grid search of both model types, a random forest model was again chosen as the final model. The final hyperparameters for the model selected were:
+@fig-class-screen shows the results of the model screen for classification models using accuracy as the ranking method. As with regression models, boosted trees and random forest models performed the best. After completing a full grid search of both model types, a random forest model was again chosen as the final model. The final hyperparameters for the model selected were:
 
 -   mtry: 8
 
 -   trees: 2000
 
--   minimun nodes: 2
+-   minimum nodes: 2
 
 ![Classification Model Screen](figures/class_screen){#fig-class-screen}
