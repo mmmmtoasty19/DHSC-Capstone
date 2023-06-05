@@ -59,7 +59,7 @@ rf_recipe <- r$recipe(ft4_dia ~ . , data = ds_train) %>%
   r$step_impute_bag(r$all_predictors())
 
 rf_tuning_model <- p$rand_forest(trees = tune(), mtry = tune(), min_n = tune()) %>%
-  p$set_engine("ranger") %>% p$set_mode("classification")
+  p$set_engine("ranger", importance = "impurity") %>% p$set_mode("classification")
 
 
 rf_workflow <- wf$workflow() %>%
