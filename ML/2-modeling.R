@@ -47,9 +47,12 @@ ds_train <- rsample$training(model_data_split)
 ds_test  <- rsample$testing(model_data_split)
 
 # verify distribution of data
-table(ds_train$ft4_dia) %>% prop.table()
-table(ds_test$ft4_dia) %>% prop.table()
+strata1 <- table(ds_train$ft4_dia) %>% prop.table() %>% tibble::enframe() %>% dplyr::rename(Train = value)
+strata2 <- table(ds_test$ft4_dia) %>% prop.table() %>% tibble::enframe() %>% dplyr::rename(Test = value)
 
+strata_table <- strata1 %>%
+  dplyr::left_join(strata2) %>%
+  dplyr::rename(Class = name)
 
 # random forest classification -----------------------------------------------------------
 

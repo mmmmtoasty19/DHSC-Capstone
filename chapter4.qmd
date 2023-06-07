@@ -1,0 +1,45 @@
+# Results
+
+```{r}
+#| include: false
+#| cache: true
+
+library(magrittr)
+load("test.Rda")
+
+```
+
+The final data set used for this analysis consisted of 11,340
+observations. All observations contained a TSH and Free T4 result and
+less than three missing results from all other analytes selected for the
+study. The dataset was then randomly split into a training set
+containing 9071 observations and a testing set containing 2269
+observations. The data was split using stratification of the Free T4
+laboratory diagnostic value. @tbl-strata shows the split percentages.
+
+```{r}
+#| label: tbl-strata
+#| tbl-cap: Data Stratification 
+#| echo: false
+
+strata_table %>% knitr::kable()
+
+```
+
+First, the report shows the ability of classification algorithms to
+predict whether Free T4 will be diagnostic, with the prediction quality
+measured by Area Under Curve (AUC) and accuracy. Data regarding the
+univariate association between each predictor analyte and the Free T4
+Diagnostic value is then presented. Finally, data is presented with the
+extent to which FT4 can be predicted by examining the correlation
+statistics denoting the relationship between measured and predicted Free
+T4 values.
+
+## Predictability of Free T4 Classifications
+
+In clinical decision-making, a key consideration in interpreting
+numerical laboratory results is often just whether the results fall
+within the normal reference range [@luo2016]. In the case of Free T4
+reflex testing, the results will either fall within the normal range
+indicating the Free T4 is not diagnostic of Hyper or Hypo Throydism, or
+they will fall outside those ranges indicating they are diagnostic.
