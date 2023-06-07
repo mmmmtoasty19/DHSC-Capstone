@@ -54,6 +54,8 @@ strata_table <- strata1 %>%
   dplyr::left_join(strata2) %>%
   dplyr::rename(Class = name)
 
+save(list = c("strata_table"), file = "figures/strata_table.Rda")
+
 # random forest classification -----------------------------------------------------------
 
 
@@ -121,13 +123,68 @@ class_test_result_conf_matrix <- ys$conf_mat(
   class_test_results %>%  tune::collect_predictions()
   ,truth = ft4_dia
   ,estimate = .pred_class
-  )
+  ) %>%  autoplot(type = "heatmap")
+
+gp2$ggsave(
+  here("figures","conf_matrix_class.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
+)
+gp2$ggsave(
+  here("figures","conf_matrix_class.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+)
 
 ys$accuracy(class_test_results %>%  tune::collect_predictions() ,truth = ft4_dia, estimate = .pred_class )
 
 class_test_results %>%
   workflows::extract_fit_parsnip() %>%
-  vip::vip(num_features = 10)
+  vip::vip()
+
+gp2$ggsave(
+  here("figures","vip_class.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
+)
+gp2$ggsave(
+  here("figures","vip_class.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+)
+
+class_test_results %>%
+  workflows::extract_fit_parsnip() %>%
+  vip::vi() %>%
+  dplyr::filter(!Variable == "TSH") %>%
+  vip::vip()
+
+class_result_pred_ds <- class_test_results %>% tune::collect_predictions()
+
+ys$roc_auc(class_result_pred_ds, ft4_dia,.pred_Hypo , `.pred_Non-Hypo`, .pred_Hyper, `.pred_Non-Hyper`)
+
+roc_curve_class <-  ys$roc_curve(class_result_pred_ds, ft4_dia,.pred_Hypo , `.pred_Non-Hypo`, .pred_Hyper, `.pred_Non-Hyper`) %>%
+  p$autoplot()
+
+gp2$ggsave(
+  here("figures","roc_curve_class.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
+)
+gp2$ggsave(
+  here("figures","roc_curve_class.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+)
 
 
 # x-boost- class ----------------------------------------------------------
