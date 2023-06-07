@@ -4,7 +4,7 @@
 #| include: false
 
 library(magrittr)
-load(here:here("figures", "strata_table.Rda"))
+load(here::here("figures", "strata_table.Rda"))
 
 ```
 
