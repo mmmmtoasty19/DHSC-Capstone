@@ -335,6 +335,30 @@ reg_test_results <-
   final_rf_reg_fit %>%
   tune::last_fit(split = model_data_split)
 
+
+reg_metrics(reg_test_results %>% tune::collect_predictions(), truth = FT4, estimate = .pred)
+
+final_reg_result_pred <- reg_test_results %>% tune::collect_predictions()
+
+ggplot(reg_test_results %>% tune::collect_predictions(), aes(x = FT4, y = .pred)) +
+  gp2$geom_abline(lty = 2) +
+  gp2$geom_point(alpha = 0.5) +
+  tune::coord_obs_pred()
+
+gp2$ggsave(
+  here("figures","reggression_pred.emf")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+  ,device = devEMF::emf
+)
+gp2$ggsave(
+  here("figures","reggression_pred.png")
+  ,width  = 7
+  ,height = 7
+  ,dpi    = 300
+)
+
 ds_reg_class_pred <- reg_test_results %>%
   tune::collect_predictions() %>%
   dplyr::select(-id, -.config) %>%

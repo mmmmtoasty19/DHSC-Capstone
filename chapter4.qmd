@@ -68,8 +68,22 @@ the extent to which a feature has a \"meaningful\" impact on the
 predicted outcome [@laan2006]. As expected, TSH is the leading variable
 in importance rankings, leading all other variables by over 2000's
 points. The following three variables are all parts of a Complete Blood
-Count (CBC), followed by the patients glucose value.
+Count (CBC), followed by the patient's glucose value.
 
 ![Variable Importance Plot](figures/vip_class){#fig-vip-class}
 
 ## Predictability of Free T4 Results (Regression) 
+
+Today, it has become widely accepted that a more sound approach to
+assessing model performance is to assess the predictive accuracy via
+loss functions. Loss functions are metrics that compare the predicted
+values to the actual value (the output of a loss function is often
+referred to as the error or pseudo residual) [@boehmke2020]. The loss
+function used to evaluate the final model was selected as the Root Mean
+Square Error, and the final testing data achieved an RMSE of 0.334.
+@fig-reg-pred shows the plotted results. The predicted results were also
+used to add the diagnostic classification of Free T4. These results
+achieved an accuracy of 0.790, and thus very similar to the
+classification model.
+
+![Regression Predictions Plot](figures/reggression_pred){#fig-reg-pred}
