@@ -1,1 +1,13 @@
+# Discussion
 
+Intro Paragraph <!--# Write after I write everything else -->
+
+## Summary of Results
+
+## Study Limitations
+
+Section overview
+
+### MIMIC Database
+
+While the MIMIC-IV database allowed for a first run of the study, it does suffer from some issues compared to other patient results. The MIMIC-IV database only contains results from ICU patients. Thus the result may not represent normal results for patients typically screened for hyper or hypothyroidism. In a study by Tyler et al., they found that laboratory value ranges from critically ill patients deviate significantly from those of healthy controls [-@tyler2018]. In their study, distribution curves based on ICU data differed significantly from the hospital standard range (mean \[SD\] overlapping coefficient, 0.51 \[0.32-0.69\]) [@tyler2018]. The data ranges from 2008 to 2019. During this time, there could have been several unknown laboratory changes. Often laboratories change methods, reference ranges, or even vendors. None of this data is available in the MIMIC database. A change in method or vendor could cause a shift in results, thus causing the algorithm to assign incorrect outcomes.

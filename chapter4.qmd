@@ -8,13 +8,7 @@ load(here::here("figures", "strata_table.Rda"))
 
 ```
 
-The final data set used for this analysis consisted of 11,340
-observations. All observations contained a TSH and Free T4 result and
-less than three missing results from all other analytes selected for the
-study. The dataset was then randomly split into a training set
-containing 9071 observations and a testing set containing 2269
-observations. The data was split using stratification of the Free T4
-laboratory diagnostic value. @tbl-strata shows the split percentages.
+The final data set used for this analysis consisted of 11,340 observations. All observations contained a TSH and Free T4 result and less than three missing results from all other analytes selected for the study. The dataset was then randomly split into a training set containing 9071 observations and a testing set containing 2269 observations. The data was split using stratification of the Free T4 laboratory diagnostic value. @tbl-strata shows the split percentages.
 
 ```{r}
 #| label: tbl-strata
@@ -25,65 +19,26 @@ strata_table %>% knitr::kable()
 
 ```
 
-First, the report shows the ability of classification algorithms to
-predict whether Free T4 will be diagnostic, with the prediction quality
-measured by Area Under Curve (AUC) and accuracy. Data regarding the
-importance association between each predictor analyte and the Free T4
-Diagnostic value is then presented. Finally, data is presented with the
-extent to which FT4 can be predicted by examining the correlation
-statistics denoting the relationship between measured and predicted Free
-T4 values.
+First, the report shows the ability of classification algorithms to predict whether Free T4 will be diagnostic, with the prediction quality measured by Area Under Curve (AUC) and accuracy. Data regarding the importance association between each predictor analyte and the Free T4 Diagnostic value is then presented. Finally, data is presented with the extent to which FT4 can be predicted by examining the correlation statistics denoting the relationship between measured and predicted Free T4 values.
 
 ## Predictability of Free T4 Classifications
 
-In clinical decision-making, a key consideration in interpreting
-numerical laboratory results is often just whether the results fall
-within the normal reference range [@luo2016]. In the case of Free T4
-reflex testing, the results will either fall within the normal range
-indicating the Free T4 is not diagnostic of Hyper or Hypo Throydism, or
-they will fall outside those ranges indicating they are diagnostic. The
-final model achieved an accuracy of 0.796 and an AUC of 0.918.
-@fig-roc_curve provides ROC curves for each of the four outcome classes.
+In clinical decision-making, a key consideration in interpreting numerical laboratory results is often just whether the results fall within the normal reference range [@luo2016]. In the case of Free T4 reflex testing, the results will either fall within the normal range indicating the Free T4 is not diagnostic of Hyper or Hypo Throydism, or they will fall outside those ranges indicating they are diagnostic. The final model achieved an accuracy of 0.796 and an AUC of 0.918. @fig-roc_curve provides ROC curves for each of the four outcome classes.
 
-![ROC curves for each of the four outcome
-classes](figures/roc_curve_class){#fig-roc_curve}
+![ROC curves for each of the four outcome classes](figures/roc_curve_class){#fig-roc_curve}
 
-@fig-conf-matrix-class shows the confusion matrix of the final testing
-data. Of the 2269 total results, 1805 were predicted correctly, leaving
-464 incorrectly predicted results. Of the incorrectly predicted results,
-72 results predicted a diagnostic Free T4 when the correct result was
-non-diagnostic. 392 of the incorrectly predicted results were predicted
-as non-diagnostic when the correct result was diagnostic.
+@fig-conf-matrix-class shows the confusion matrix of the final testing data. Of the 2269 total results, 1805 were predicted correctly, leaving 464 incorrectly predicted results. Of the incorrectly predicted results, 72 results predicted a diagnostic Free T4 when the correct result was non-diagnostic. 392 of the incorrectly predicted results were predicted as non-diagnostic when the correct result was diagnostic.
 
-![Final Model Confusion
-Matrix](figures/conf_matrix_class){#fig-conf-matrix-class}
+![Final Model Confusion Matrix](figures/conf_matrix_class){#fig-conf-matrix-class}
 
 ## Contributions of Individual Analytes
 
-Understanding how an ML model makes predictions helps build trust in the
-model and is the fundamental idea of the emerging field of interpretable
-machine learning (IML) [@greenwell2020]. @fig-vip-class shows the
-importance of features in the final model. Importance can be defined as
-the extent to which a feature has a \"meaningful\" impact on the
-predicted outcome [@laan2006]. As expected, TSH is the leading variable
-in importance rankings, leading all other variables by over 2000's
-points. The following three variables are all parts of a Complete Blood
-Count (CBC), followed by the patient's glucose value.
+Understanding how an ML model makes predictions helps build trust in the model and is the fundamental idea of the emerging field of interpretable machine learning (IML) [@greenwell2020]. @fig-vip-class shows the importance of features in the final model. Importance can be defined as the extent to which a feature has a "meaningful" impact on the predicted outcome [@laan2006]. As expected, TSH is the leading variable in importance rankings, leading all other variables by over 2000's points. The following three variables are all parts of a Complete Blood Count (CBC), followed by the patient's glucose value.
 
 ![Variable Importance Plot](figures/vip_class){#fig-vip-class}
 
-## Predictability of Free T4 Results (Regression) 
+## Predictability of Free T4 Results (Regression)
 
-Today, it has become widely accepted that a more sound approach to
-assessing model performance is to assess the predictive accuracy via
-loss functions. Loss functions are metrics that compare the predicted
-values to the actual value (the output of a loss function is often
-referred to as the error or pseudo residual) [@boehmke2020]. The loss
-function used to evaluate the final model was selected as the Root Mean
-Square Error, and the final testing data achieved an RMSE of 0.334.
-@fig-reg-pred shows the plotted results. The predicted results were also
-used to add the diagnostic classification of Free T4. These results
-achieved an accuracy of 0.790, and thus very similar to the
-classification model.
+Today, it has become widely accepted that a more sound approach to assessing model performance is to assess the predictive accuracy via loss functions. Loss functions are metrics that compare the predicted values to the actual value (the output of a loss function is often referred to as the error or pseudo residual) [@boehmke2020]. The loss function used to evaluate the final model was selected as the Root Mean Square Error, and the final testing data achieved an RMSE of 0.334. @fig-reg-pred shows the plotted results. The predicted results were also used to add the diagnostic classification of Free T4. These results achieved an accuracy of 0.790, and thus very similar to the classification model.
 
 ![Regression Predictions Plot](figures/reggression_pred){#fig-reg-pred}
