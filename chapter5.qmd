@@ -43,4 +43,39 @@ adjustment, race explaining 6.5 percent of the variation in TSH levels
 included in developing a future algorithm. However, as it stands, the
 current data set has incomplete data for patient race and ethnicity.
 
+### Other Limitations
+
+Should I write about my computer? - It is not capable of running the
+more powerful algorithm
+
+### Future Studies
+
+Explain how to fix these issues.
+
 ## Real World Applications 
+
+While the current algorithm did not quite achieve an accuracy ready for
+deployment, it is hypothesized that a system like this could be
+implemented in clinical decision-making systems. As stated previously,
+current practice is a physician (or other care providers) orders a TSH,
+and if the value is outside laboratory-established reference ranges, the
+Free T4 is added on. In the current study database, this reflex testing
+was non-diagnostic 76% of the time for elevated TSH values and 67% for
+decreased TSH values. Using clinical decision support first to predict
+whether the Free T4 would be diagnostic, the care provider can use this
+prediction and other patient signs and symptoms to determine if running
+a Free T4 lab test is needed.
+
+Similarly to Luo et al., the idea that the diagnostic information
+offered by Free T4 often duplicates what other diagnostic tests provide
+suggests a notion of "informationally" redundant testing [-@luo2016]. It
+is speculated that informationally redundant testing occurs in various
+diagnostic settings and diagnostic workups. It is much more frequent
+than the more traditionally defined and narrowly framed notion of
+redundant testing, which most often includes unintended duplications of
+the same or similar tests. Under this narrow definition, redundant
+laboratory testing is estimated to waste more than \$5 billion annually
+in the United States, potentially dwarfed by the waste from
+informationally redundant testing [@luo2016]. However, since Free T4 and
+all other tests used in this study are performed on automated
+instruments, the cost savings to the lab and patient may be minimal.

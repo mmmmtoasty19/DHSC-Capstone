@@ -395,9 +395,9 @@ model_data %>%
   dplyr::mutate(tsh_level = ifelse(TSH > 4.2, "high", "low")) %>%
   dplyr::group_by(tsh_level, ft4_dia) %>%
   dplyr::summarise(
-    n = n()
+    n = dplyr::n()
   ) %>%
-  mutate(freq = n / sum(n))
+  dplyr::mutate(freq = n / sum(n))
 
 
 
