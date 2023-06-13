@@ -1,13 +1,46 @@
 # Discussion
 
-Intro Paragraph <!--# Write after I write everything else -->
+Intro Paragraph - In
+progress<!--# Write after I write everything else -->
 
 ## Summary of Results
 
 ## Study Limitations
 
-Section overview
+Section overview - In progress
 
 ### MIMIC Database
 
-While the MIMIC-IV database allowed for a first run of the study, it does suffer from some issues compared to other patient results. The MIMIC-IV database only contains results from ICU patients. Thus the result may not represent normal results for patients typically screened for hyper or hypothyroidism. In a study by Tyler et al., they found that laboratory value ranges from critically ill patients deviate significantly from those of healthy controls [-@tyler2018]. In their study, distribution curves based on ICU data differed significantly from the hospital standard range (mean \[SD\] overlapping coefficient, 0.51 \[0.32-0.69\]) [@tyler2018]. The data ranges from 2008 to 2019. During this time, there could have been several unknown laboratory changes. Often laboratories change methods, reference ranges, or even vendors. None of this data is available in the MIMIC database. A change in method or vendor could cause a shift in results, thus causing the algorithm to assign incorrect outcomes.
+While the MIMIC-IV database allowed for a first run of the study, it
+does suffer from some issues compared to other patient results. The
+MIMIC-IV database only contains results from ICU patients. Thus the
+result may not represent normal results for patients typically screened
+for hyper or hypothyroidism. In a study by Tyler et al., they found that
+laboratory value ranges from critically ill patients deviate
+significantly from those of healthy controls [-@tyler2018]. In their
+study, distribution curves based on ICU data differed significantly from
+the hospital standard range (mean \[SD\] overlapping coefficient, 0.51
+\[0.32-0.69\]) [@tyler2018]. The data ranges from 2008 to 2019. During
+this time, there could have been several unknown laboratory changes.
+Often laboratories change methods, reference ranges, or even vendors.
+None of this data is available in the MIMIC database. A change in method
+or vendor could cause a shift in results, thus causing the algorithm to
+assign incorrect outcomes.
+
+The dataset also sufferers from incompleteness. Due to the fact the
+database was not explicitly designed for this study, many patients do
+not have complete sets of lab results. The study also had to pick and
+choose lab tests to allow for as many sets of TSH and Free T4 results as
+possible. For instance, in a study by Luo et al., a total of 42
+different lab tests were selected for a Machine Learning study, compared
+to only 16 selected for this study [-@luo2016]. The patient demographic
+data also suffered from the same incompleteness. Due to this fact, only
+the age and gender of the patient were used in developing the algorithm.
+An early study by Schectman et al. found the mean TSH level of Blacks
+was 0.4 (SE .053) mU/L lower than that for Whites after age and sex
+adjustment, race explaining 6.5 percent of the variation in TSH levels
+[-@schectman1991]. This variation in results should potentially be
+included in developing a future algorithm. However, as it stands, the
+current data set has incomplete data for patient race and ethnicity.
+
+## Real World Applications 
