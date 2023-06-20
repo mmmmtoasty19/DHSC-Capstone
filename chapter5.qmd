@@ -5,6 +5,50 @@ progress<!--# Write after I write everything else -->
 
 ## Summary of Results
 
+The findings of this study indicate that within another commonly ordered
+laboratory testing, the diagnostic value of Free T4 can be predicted
+accurately 80% of the time. While examining only the elevated TSH
+results, the algorithm had a false positive rate of 2% and a false
+negative rate of 16%. In the original data, 76% of the time, the result
+was non-diagnostic for Hypo-Thryodism. For the decreased TSH results,
+the algorithm had a false positive rate of 8% and a false negative rate
+of 20%. In the original data, 67% of the time, the result was
+non-diagnostic for Hyper-Thryodism.
+
+1846 - Hypo
+
+423 - Hyper
+
+9170 - High TSH (hypo)
+
+## Real World Applications 
+
+While the current algorithm did not quite achieve an accuracy ready for
+deployment, it is hypothesized that a system like this could be
+implemented in clinical decision-making systems. As stated previously,
+current practice is a physician (or other care providers) orders a TSH,
+and if the value is outside laboratory-established reference ranges, the
+Free T4 is added on. In the current study database, this reflex testing
+was non-diagnostic 76% of the time for elevated TSH values and 67% for
+decreased TSH values. Using clinical decision support first to predict
+whether the Free T4 would be diagnostic, the care provider can use this
+prediction and other patient signs and symptoms to determine if running
+a Free T4 lab test is needed.
+
+Similarly to Luo et al., the idea that the diagnostic information
+offered by Free T4 often duplicates what other diagnostic tests provide
+suggests a notion of "informationally" redundant testing [-@luo2016]. It
+is speculated that informationally redundant testing occurs in various
+diagnostic settings and diagnostic workups. It is much more frequent
+than the more traditionally defined and narrowly framed notion of
+redundant testing, which most often includes unintended duplications of
+the same or similar tests. Under this narrow definition, redundant
+laboratory testing is estimated to waste more than \$5 billion annually
+in the United States, potentially dwarfed by the waste from
+informationally redundant testing [@luo2016]. However, since Free T4 and
+all other tests used in this study are performed on automated
+instruments, the cost savings to the lab and patient may be minimal.
+
 ## Study Limitations
 
 Section overview - In progress
@@ -51,31 +95,3 @@ more powerful algorithm
 ### Future Studies
 
 Explain how to fix these issues.
-
-## Real World Applications 
-
-While the current algorithm did not quite achieve an accuracy ready for
-deployment, it is hypothesized that a system like this could be
-implemented in clinical decision-making systems. As stated previously,
-current practice is a physician (or other care providers) orders a TSH,
-and if the value is outside laboratory-established reference ranges, the
-Free T4 is added on. In the current study database, this reflex testing
-was non-diagnostic 76% of the time for elevated TSH values and 67% for
-decreased TSH values. Using clinical decision support first to predict
-whether the Free T4 would be diagnostic, the care provider can use this
-prediction and other patient signs and symptoms to determine if running
-a Free T4 lab test is needed.
-
-Similarly to Luo et al., the idea that the diagnostic information
-offered by Free T4 often duplicates what other diagnostic tests provide
-suggests a notion of "informationally" redundant testing [-@luo2016]. It
-is speculated that informationally redundant testing occurs in various
-diagnostic settings and diagnostic workups. It is much more frequent
-than the more traditionally defined and narrowly framed notion of
-redundant testing, which most often includes unintended duplications of
-the same or similar tests. Under this narrow definition, redundant
-laboratory testing is estimated to waste more than \$5 billion annually
-in the United States, potentially dwarfed by the waste from
-informationally redundant testing [@luo2016]. However, since Free T4 and
-all other tests used in this study are performed on automated
-instruments, the cost savings to the lab and patient may be minimal.
