@@ -211,14 +211,14 @@ tree-based learning algorithms and neural networks often performed best.
 @tbl-lab_ml displays the overview of their research.
 
 | **Author and Year** | **Objective and Machine Learning Task**                                                                                | **Best Model**        | **Major Themes**                       |
-|:-----------------|:-----------------|:-----------------|:-----------------|
+|:--------------------|:-----------------------------------------------------------------------------------------------------------------------|:----------------------|:---------------------------------------|
 | Azarkhish (2012)    | Predict iron deficiency anemia and serum iron levels from CBC indices                                                  | Neural Network        | Prediction                             |
 | Cao (2012)          | Triage manual review for urinalysis samples                                                                            | Tree-based            | Automation                             |
 | Yang (2013)         | Predict normal reference ranges of ESR for various laboratories based on geographic and other clinical features        | Neural Network        | Interpretation                         |
 | Lidbury (2015)      | Predict liver function test results from other tests in the panel, highlighting redundancy in the liver function panel | Tree-based            | Prediction, Utilization                |
 | Demirci (2016)      | Classify whether critical lab result is valid or invalid using other lab values and clinical information               | Neural Network        | Automation, Interpretation, Validation |
 | Luo (2016)          | Predict ferritin from other tests in iron panel                                                                        | Tree-based            | Prediction, Utilization                |
-| Poole (2016)        | Create personalized reference ranges that take into account patients\' diagnoses                                       | Unsupervised learning | Interpretation                         |
+| Poole (2016)        | Create personalized reference ranges that take into account patients' diagnoses                                        | Unsupervised learning | Interpretation                         |
 | Parr (2018)         | Automate mapping of Veterans Affair laboratory data to LOINC codes                                                     | Tree-based            | Information systems, Automation        |
 | Wilkes (2018)       | Classify urine steroid profiles as normal or abnormal, and further interpret into specific disease processes           | Tree-based            | Interpretation, Automation             |
 | Fillmore (2019)     | Automate mapping of Veterans Affair laboratory data to LOINC codes                                                     | Tree-based            | Information systems, Automation        |

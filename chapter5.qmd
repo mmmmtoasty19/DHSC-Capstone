@@ -15,11 +15,12 @@ the algorithm had a false positive rate of 8% and a false negative rate
 of 20%. In the original data, 67% of the time, the result was
 non-diagnostic for Hyper-Thryodism.
 
-1846 - Hypo
-
-423 - Hyper
-
-9170 - High TSH (hypo)
+While TSH was expected to be the most important variable in building
+random forest models, it was quite unexpected that the next three values
+would be Hematology results. In the clinical laboratory, TSH and CBCs
+are often run on different analyzers and often in completely different
+departments. Finding this slight correlation could be valuable to
+building further algorithms.
 
 ## Real World Applications 
 
@@ -48,6 +49,13 @@ in the United States, potentially dwarfed by the waste from
 informationally redundant testing [@luo2016]. However, since Free T4 and
 all other tests used in this study are performed on automated
 instruments, the cost savings to the lab and patient may be minimal.
+
+As Rabbani et al. study showed, Machine Learning in the Clinical
+Laboratory is an emerging field. However, few existing studies relate to
+predicting laboratory values based on other results [-@rabbani2022]. The
+few studies that do exist follow a similar premise. All are trying to
+reduce redundant laboratory testing and thus lower the cost burden on
+the patient.
 
 ## Study Limitations
 
