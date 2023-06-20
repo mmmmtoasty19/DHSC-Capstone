@@ -54,14 +54,10 @@ As Rabbani et al. study showed, Machine Learning in the Clinical
 Laboratory is an emerging field. However, few existing studies relate to
 predicting laboratory values based on other results [-@rabbani2022]. The
 few studies that do exist follow a similar premise. All are trying to
-reduce redundant laboratory testing and thus lower the cost burden on
-the patient.
+reduce redundant laboratory testing, thus lowering the patient's cost
+burden.
 
 ## Study Limitations
-
-Section overview - In progress
-
-### MIMIC Database
 
 While the MIMIC-IV database allowed for a first run of the study, it
 does suffer from some issues compared to other patient results. The
@@ -95,11 +91,12 @@ adjustment, race explaining 6.5 percent of the variation in TSH levels
 included in developing a future algorithm. However, as it stands, the
 current data set has incomplete data for patient race and ethnicity.
 
-### Other Limitations
+As Machine learning algorithms become more and more powerful, it is
+additionally important from an infrastructure standpoint to have the
+processing power capable of handling the algorithms. This becomes even
+more important in an attempt to put the algorithm into practice, as the
+computer must be able to process results in mere milliseconds.
 
-Should I write about my computer? - It is not capable of running the
-more powerful algorithm
-
-### Future Studies
+## Future Studies
 
 Explain how to fix these issues.
