@@ -1,102 +1,31 @@
 # Discussion
 
-Intro Paragraph - In
-progress<!--# Write after I write everything else -->
+Intro Paragraph - In progress<!--# Write after I write everything else -->
 
 ## Summary of Results
 
-The findings of this study indicate that within another commonly ordered
-laboratory testing, the diagnostic value of Free T4 can be predicted
-accurately 80% of the time. While examining only the elevated TSH
-results, the algorithm had a false positive rate of 2% and a false
-negative rate of 16%. In the original data, 76% of the time, the result
-was non-diagnostic for Hypo-Thryodism. For the decreased TSH results,
-the algorithm had a false positive rate of 8% and a false negative rate
-of 20%. In the original data, 67% of the time, the result was
-non-diagnostic for Hyper-Thryodism.
+The findings of this study indicate that within another commonly ordered laboratory testing, the diagnostic value of Free T4 can be predicted accurately 80% of the time. While examining only the elevated TSH results, the algorithm had a false positive rate of 2% and a false negative rate of 16%. In the original data, 76% of the time, the result was non-diagnostic for Hypo-Thryodism. For the decreased TSH results, the algorithm had a false positive rate of 8% and a false negative rate of 20%. In the original data, 67% of the time, the result was non-diagnostic for Hyper-Thryodism.
 
-While TSH was expected to be the most important variable in building
-random forest models, it was quite unexpected that the next three values
-would be Hematology results. In the clinical laboratory, TSH and CBCs
-are often run on different analyzers and often in completely different
-departments. Finding this slight correlation could be valuable to
-building further algorithms.
+While TSH was expected to be the most important variable in building random forest models, it was entirely unexpected that the following three values would be Hematology results. In the clinical laboratory, TSH and CBCs are often run on different analyzers and in other departments. Finding this slight correlation could be valuable to building further algorithms.
 
-## Real World Applications 
+## Real World Applications
 
-While the current algorithm did not quite achieve an accuracy ready for
-deployment, it is hypothesized that a system like this could be
-implemented in clinical decision-making systems. As stated previously,
-current practice is a physician (or other care providers) orders a TSH,
-and if the value is outside laboratory-established reference ranges, the
-Free T4 is added on. In the current study database, this reflex testing
-was non-diagnostic 76% of the time for elevated TSH values and 67% for
-decreased TSH values. Using clinical decision support first to predict
-whether the Free T4 would be diagnostic, the care provider can use this
-prediction and other patient signs and symptoms to determine if running
-a Free T4 lab test is needed.
+While the current algorithm did not quite achieve an accuracy ready for deployment, it is hypothesized that a system like this could be implemented in clinical decision-making systems. As stated previously, current practice is a physician (or other care providers) orders a TSH, and if the value is outside laboratory-established reference ranges, the Free T4 is added on. In the current study database, this reflex testing was non-diagnostic 76% of the time for elevated TSH values and 67% for decreased TSH values. Using clinical decision support first to predict whether the Free T4 would be diagnostic, the care provider can use this prediction and other patient signs and symptoms to determine if running a Free T4 lab test is needed.
 
-Similarly to Luo et al., the idea that the diagnostic information
-offered by Free T4 often duplicates what other diagnostic tests provide
-suggests a notion of "informationally" redundant testing [-@luo2016]. It
-is speculated that informationally redundant testing occurs in various
-diagnostic settings and diagnostic workups. It is much more frequent
-than the more traditionally defined and narrowly framed notion of
-redundant testing, which most often includes unintended duplications of
-the same or similar tests. Under this narrow definition, redundant
-laboratory testing is estimated to waste more than \$5 billion annually
-in the United States, potentially dwarfed by the waste from
-informationally redundant testing [@luo2016]. However, since Free T4 and
-all other tests used in this study are performed on automated
-instruments, the cost savings to the lab and patient may be minimal.
+Similarly to Luo et al., the idea that the diagnostic information offered by Free T4 often duplicates what other diagnostic tests provide suggests a notion of "informationally" redundant testing [-@luo2016]. It is speculated that informationally redundant testing occurs in various diagnostic settings and diagnostic workups. It is much more frequent than the more traditionally defined and narrowly framed notion of redundant testing, which most often includes unintended duplications of the same or similar tests. Under this narrow definition, redundant laboratory testing is estimated to waste more than \$5 billion annually in the United States, potentially dwarfed by the waste from informationally redundant testing [@luo2016]. However, since Free T4 and all other tests used in this study are performed on automated instruments, the cost savings to the lab and patient may be minimal.
 
-As Rabbani et al. study showed, Machine Learning in the Clinical
-Laboratory is an emerging field. However, few existing studies relate to
-predicting laboratory values based on other results [-@rabbani2022]. The
-few studies that do exist follow a similar premise. All are trying to
-reduce redundant laboratory testing, thus lowering the patient's cost
-burden.
+As Rabbani et al. study showed, Machine Learning in the Clinical Laboratory is an emerging field. However, few existing studies relate to predicting laboratory values based on other results [-@rabbani2022]. The few studies that do exist follow a similar premise. All are trying to reduce redundant laboratory testing, thus lowering the patient's cost.
 
 ## Study Limitations
 
-While the MIMIC-IV database allowed for a first run of the study, it
-does suffer from some issues compared to other patient results. The
-MIMIC-IV database only contains results from ICU patients. Thus the
-result may not represent normal results for patients typically screened
-for hyper or hypothyroidism. In a study by Tyler et al., they found that
-laboratory value ranges from critically ill patients deviate
-significantly from those of healthy controls [-@tyler2018]. In their
-study, distribution curves based on ICU data differed significantly from
-the hospital standard range (mean \[SD\] overlapping coefficient, 0.51
-\[0.32-0.69\]) [@tyler2018]. The data ranges from 2008 to 2019. During
-this time, there could have been several unknown laboratory changes.
-Often laboratories change methods, reference ranges, or even vendors.
-None of this data is available in the MIMIC database. A change in method
-or vendor could cause a shift in results, thus causing the algorithm to
-assign incorrect outcomes.
+While the MIMIC-IV database allowed for a first run of the study, it does suffer from some issues compared to other patient results. The MIMIC-IV database only contains results from ICU patients. Thus the result may not represent normal results for patients typically screened for hyper or hypothyroidism. In a study by Tyler et al., they found that laboratory value ranges from critically ill patients deviate significantly from those of healthy controls [-@tyler2018]. In their study, distribution curves based on ICU data, have differed considerably from the standard hospital range (mean \[SD\] overlapping coefficient, 0.51 \[0.32-0.69\]) [@tyler2018]. The data ranges from 2008 to 2019. During this time, there could have been several unknown laboratory changes. Often laboratories change methods, reference ranges, or even vendors. None of this data is available in the MIMIC database. A change in method or vendor could cause a shift in results, thus causing the algorithm to assign incorrect outcomes.
 
-The dataset also sufferers from incompleteness. Due to the fact the
-database was not explicitly designed for this study, many patients do
-not have complete sets of lab results. The study also had to pick and
-choose lab tests to allow for as many sets of TSH and Free T4 results as
-possible. For instance, in a study by Luo et al., a total of 42
-different lab tests were selected for a Machine Learning study, compared
-to only 16 selected for this study [-@luo2016]. The patient demographic
-data also suffered from the same incompleteness. Due to this fact, only
-the age and gender of the patient were used in developing the algorithm.
-An early study by Schectman et al. found the mean TSH level of Blacks
-was 0.4 (SE .053) mU/L lower than that for Whites after age and sex
-adjustment, race explaining 6.5 percent of the variation in TSH levels
-[-@schectman1991]. This variation in results should potentially be
-included in developing a future algorithm. However, as it stands, the
-current data set has incomplete data for patient race and ethnicity.
+The dataset also sufferers from incompleteness. Due to the fact the database was not explicitly designed for this study, many patients do not have complete sets of lab results. The study also had to pick and choose lab tests to allow for as many groups of TSH and Free T4 results as possible. For instance, in a study by Luo et al., a total of 42 different lab tests were selected for a Machine Learning study, compared to only 16 selected for this study [-@luo2016]. The patient demographic data also suffered from the same incompleteness. Due to this fact, only the age and gender of the patient were used in developing the algorithm. An early study by Schectman et al. found the mean TSH level of Blacks was 0.4 (SE .053) mU/L lower than that for Whites after age and sex adjustment, race explaining 6.5 percent of the variation in TSH levels [-@schectman1991]. This variation in results should potentially be included in developing a future algorithm. However, as it stands, the current data set has incomplete data for patient race and ethnicity.
 
-As Machine learning algorithms become more and more powerful, it is
-additionally important from an infrastructure standpoint to have the
-processing power capable of handling the algorithms. This becomes even
-more important in an attempt to put the algorithm into practice, as the
-computer must be able to process results in mere milliseconds.
+As Machine learning algorithms become more and more powerful, it is additionally vital from an infrastructure standpoint to have the processing power capable of handling the algorithms. This becomes even more important in an attempt to put the algorithm into practice, as the computer must be able to process results in mere milliseconds.
 
 ## Future Studies
 
-Explain how to fix these issues.
+While the current algorithm is not quite ready for production use, it does lead to many promising ideas. The first step to further develop this algorithm would be collecting data on non-ICU patients. The idea would be gathering data on patients much closer to those screened for Hypo and Hyper-Thyrodism. With data closer to normal, the optimal hyperparameters could continue to be tweaked, as well as training the model with this data. There could also be a reason to try and test the current algorithm with different patient data to assess performance. This would be similar to what Li et al. performed with their study to identify unnecessary laboratory tests [-@li2022]. After developing their algorithm on the MIMIC-III database, they gathered data from Memorial Hermann Hospital in Houston, Texas. However, their algorithm was designed for ICU patients in this study, so this was a more direct performance comparison. In the case of this study, the algorithm was intended more as a proof of concept than are production-ready idea.
+
+One of the most challenging parts of this study and any machine learning in the clinical laboratory is implementing it after the fact. Developing an algorithm that can predict laboratory testing is just half the idea. Many current laboratory information systems would be unable to handle this type of clinical decision-making system, as this would be much outside the expected behavior of these systems.
