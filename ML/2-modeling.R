@@ -140,6 +140,8 @@ gp2$ggsave(
 )
 
 ys$accuracy(class_test_results %>%  tune::collect_predictions() ,truth = ft4_dia, estimate = .pred_class )
+ys$sensitivity(class_test_results %>%  tune::collect_predictions() ,truth = ft4_dia, estimate = .pred_class )
+ys$specificity(class_test_results %>%  tune::collect_predictions() ,truth = ft4_dia, estimate = .pred_class )
 
 class_test_results %>%
   workflows::extract_fit_parsnip() %>%
